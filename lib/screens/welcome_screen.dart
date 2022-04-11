@@ -29,6 +29,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     controller.forward();
 
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse(from: 0.88);
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });
+
     controller.addListener(() {
       setState(() {});
     });
