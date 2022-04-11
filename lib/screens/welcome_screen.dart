@@ -12,6 +12,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
+  Animation animation;
   @override
   void initState() {
     super.initState();
@@ -21,8 +22,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(
         seconds: 1,
       ),
-      upperBound: 88,
+      upperBound: 0.88,
     );
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.ease);
 
     controller.forward();
 
@@ -47,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: controller.value,
+                    height: animation.value * 100,
                   ),
                 ),
                 Text(
@@ -55,8 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
-                    color:
-                        Colors.grey[600].withOpacity(controller.value / 100.0),
+                    color: Colors.grey[600].withOpacity(animation.value),
                   ),
                 ),
               ],
