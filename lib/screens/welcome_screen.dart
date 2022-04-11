@@ -1,5 +1,6 @@
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -8,7 +9,28 @@ class WelcomeScreen extends StatefulWidget {
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 1,
+      ),
+      upperBound: 88,
+    );
+
+    controller.forward();
+
+    controller.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60.0,
+                    height: controller.value,
                   ),
                 ),
                 Text(
@@ -33,6 +55,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
+                    color:
+                        Colors.grey[600].withOpacity(controller.value / 100.0),
                   ),
                 ),
               ],
