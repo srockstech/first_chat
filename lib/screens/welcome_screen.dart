@@ -22,20 +22,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(
         seconds: 1,
       ),
-      upperBound: 0.88,
     );
 
-    animation = CurvedAnimation(parent: controller, curve: Curves.ease);
+    animation = ColorTween(begin: Colors.grey[600], end: Colors.white)
+        .animate(controller);
 
     controller.forward();
-
-    animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller.reverse(from: 0.88);
-      } else if (status == AnimationStatus.dismissed) {
-        controller.forward();
-      }
-    });
 
     controller.addListener(() {
       setState(() {});
@@ -51,31 +43,28 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    child: Image.asset('images/logo.png'),
-                    height: animation.value * 100,
-                  ),
-                ),
-                Text(
-                  'Flash Chat',
-                  style: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.grey[600].withOpacity(animation.value),
-                  ),
-                ),
-              ],
+            Hero(
+              tag: 'logo',
+              child: Container(
+                child: Image.asset('images/logo.png'),
+                height: 88,
+              ),
+            ),
+            Text(
+              'Flash Chat',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 45.0,
+                fontWeight: FontWeight.w900,
+                color: Colors.grey[600],
+              ),
             ),
             SizedBox(
               height: 48.0,
