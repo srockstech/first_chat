@@ -6,7 +6,6 @@ class RoundedButton extends StatelessWidget {
   final Function onPressed;
   RoundedButton(
       {@required this.color, @required this.text, @required this.onPressed});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +19,7 @@ class RoundedButton extends StatelessWidget {
           height: 55.0,
           child: Text(
             text,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: Colors.white),
           ),
         ),
       ),
