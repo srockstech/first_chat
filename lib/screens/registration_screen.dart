@@ -1,6 +1,7 @@
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'RegistrationScreen';
@@ -33,6 +34,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             TextField(
               textAlign: TextAlign.center,
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
                 email = value;
               },
@@ -43,6 +45,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
               textAlign: TextAlign.center,
               onChanged: (value) {
                 password = value;
@@ -57,8 +60,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               color: Colors.blueAccent,
               text: 'Register',
               onPressed: () {
-                print('Email: $email');
-                print('Password: $password');
+                // print('Email: $email');
+                // print('Password: $password');
+                FirebaseAuth a = FirebaseAuth.instance;
               },
             ),
           ],
