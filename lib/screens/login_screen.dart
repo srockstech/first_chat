@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
+                textAlign:  TextAlign.center,
                 onChanged: (value) {
                   email = value;
                 },
