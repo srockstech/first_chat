@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 tag: 'logo',
                 child: Container(
                   height: 200.0,
-                  child: Image.asset('images/logo.png'),
+                  child: Image.asset('images/logo_3.png'),
                 ),
               ),
               SizedBox(
@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               RoundedButton(
                 color: Colors.lightBlueAccent,
                 text: 'Log In',
+                textColor: Colors.white,
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;

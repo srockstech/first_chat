@@ -32,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 tag: 'logo',
                 child: Container(
                   height: 200.0,
-                  child: Image.asset('images/logo.png'),
+                  child: Image.asset('images/logo_3.png'),
                 ),
               ),
               SizedBox(
@@ -65,6 +65,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               RoundedButton(
                 color: Colors.blueAccent,
                 text: 'Register',
+                textColor: Colors.white,
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
