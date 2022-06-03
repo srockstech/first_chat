@@ -56,8 +56,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 58),
+                SizedBox(width: 30),
                 AnimatedTextKit(
                   isRepeatingAnimation: false,
                   animatedTexts: [
