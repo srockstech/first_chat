@@ -16,30 +16,30 @@ class RoundedButton extends StatelessWidget {
       return TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          padding: EdgeInsets.all(screenHeight * 0.025),
+          padding: EdgeInsets.all(screenHeight * 0.02),
           backgroundColor: color,
           shadowColor: shadowColor,
           elevation: 18,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(screenHeight * 0.025)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(screenHeight * 0.04), bottomLeft: Radius.circular(screenHeight * 0.04), bottomRight: Radius.circular(screenHeight * 0.04))),
         ),
         child: Text(
           text,
-          style: TextStyle(fontSize: 16, color: textColor, letterSpacing: 1),
+          style: TextStyle(fontSize: 16, color: textColor, letterSpacing: 0.5),
         ),
       );
     }else{
       return OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.all(screenHeight * 0.025),
+          padding: EdgeInsets.all(screenHeight * 0.02),
           side: BorderSide(color: color, width: 2),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(screenHeight * 0.025)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(screenHeight * 0.04), bottomLeft: Radius.circular(screenHeight * 0.04), bottomRight: Radius.circular(screenHeight * 0.04))),
         ),
         child: Text(
           text,
-          style: TextStyle(fontSize: 16, color: textColor, letterSpacing: 1),
+          style: TextStyle(fontSize: 16, color: textColor, letterSpacing: 0.5),
         ),
       );
     }
