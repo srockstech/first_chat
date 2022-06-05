@@ -26,7 +26,7 @@ class RoundedButton extends StatelessWidget {
           padding: EdgeInsets.all(screenHeight * 0.02),
           backgroundColor: color,
           shadowColor: shadowColor,
-          elevation: screenHeight * 0.01,
+          elevation: screenHeight * 0.02,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(screenHeight * 0.04),
@@ -46,7 +46,10 @@ class RoundedButton extends StatelessWidget {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.all(screenHeight * 0.02),
-          side: BorderSide(color: color, width: screenHeight * 0.002),
+          side: BorderSide(
+            color: color,
+            width: screenHeight * 0.002,
+          ),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(screenHeight * 0.04),
