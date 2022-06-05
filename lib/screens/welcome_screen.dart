@@ -1,9 +1,7 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,22 +19,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   void initState() {
+    // controller = AnimationController(
+    //   vsync: this,
+    //   duration: Duration(
+    //     seconds: 1,
+    //   ),
+    // );
+    // animation = ColorTween(
+    //   begin: kOrange,
+    //   end: kOrange,
+    // ).animate(controller);
+    // controller.forward();
+    // controller.addListener(() {
+    //   setState(() {});
+    // });
     super.initState();
-
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(
-        seconds: 1,
-      ),
-    );
-    animation = ColorTween(
-      begin: kOrange,
-      end: kOrange,
-    ).animate(controller);
-    controller.forward();
-    controller.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -49,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: animation.value,
+      backgroundColor: kOrange, //animation.value
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -57,7 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           Expanded(
             flex: 8,
             child: Container(
-              color: animation.value,
+              color: kOrange, //animation.value
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -71,34 +68,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // SizedBox(width: 19),
-                      AnimatedTextKit(
-                        isRepeatingAnimation: false,
-                        animatedTexts: [
-                          TyperAnimatedText(
-                            'See',
-                            textStyle: TextStyle(
-                              fontSize: screenHeight * 0.08,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.white,
-                            ),
-                            speed: Duration(milliseconds: 500),
-                          ),
-                        ],
+                      Text(
+                        'See',
+                        style: TextStyle(
+                          fontSize: screenHeight * 0.08,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
                       ),
-                      AnimatedTextKit(
-                        isRepeatingAnimation: false,
-                        animatedTexts: [
-                          TyperAnimatedText(
-                            'chat',
-                            textStyle: TextStyle(
-                              fontSize: screenHeight * 0.08,
-                              fontWeight: FontWeight.w900,
-                              color: kDarkBlue,
-                            ),
-                            speed: Duration(milliseconds: 500),
-                          ),
-                        ],
+                      Text(
+                        'chat',
+                        style: TextStyle(
+                          fontSize: screenHeight * 0.08,
+                          fontWeight: FontWeight.w900,
+                          color: kDarkBlue,
+                        ),
                       ),
                     ],
                   ),
@@ -134,23 +118,23 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: screenHeight * 0.04,
                   ),
                   RoundedButton(
-                      bordered: true,
-                      color: kDarkBlue,
-                      text: 'Login',
-                      textColor: kDarkBlue,
-                      onPressed: () {
-                        Navigator.pushNamed(context, LoginScreen.id);
-                      }),
-                  SizedBox(
-                    height: screenHeight * 0.03,
-                  ),
-                  RoundedButton(
                       color: kOrange,
                       text: 'Get Started',
                       shadowColor: kOrangeShadow,
                       textColor: Colors.white,
                       onPressed: () {
                         Navigator.pushNamed(context, RegistrationScreen.id);
+                      }),
+                  SizedBox(
+                    height: screenHeight * 0.03,
+                  ),
+                  RoundedButton(
+                      bordered: true,
+                      color: kDarkBlue,
+                      text: 'Already a member? Login',
+                      textColor: kDarkBlue,
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.id);
                       }),
                   SizedBox(
                     height: screenHeight * 0.025,
