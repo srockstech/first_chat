@@ -20,8 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String email;
   String password;
   bool showSpinner = false;
-  final _auth = FirebaseAuth.instance;
   bool hiddenPassword = true;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,13 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: kOrange,
       body: SafeArea(
         child: ModalProgressHUD(
+          opacity: 0.4,
+          progressIndicator: RefreshProgressIndicator(
+            color: kDarkBlue,
+            strokeWidth: 3,
+            backgroundColor: kOrangeShadow,
+          ),
+          color: Colors.black,
           inAsyncCall: showSpinner,
           child: ListView(
             children: [
@@ -49,12 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     Hero(
                       tag: 'logo',
                       child: Container(
-                        height: 200.0,
+                        height: screenHeight * 0.22,
                         child: Image.asset('images/logo_3.png'),
                       ),
                     ),
                     SizedBox(
-                      height: 48.0,
+                      height: screenHeight * 0.05,
                     ),
                     QuoteBubbleTextField(
                       screenHeight: screenHeight,
