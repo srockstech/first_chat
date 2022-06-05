@@ -37,6 +37,8 @@ const kTextFieldDecoration = InputDecoration(
 
 const Color kPink = Color(0xFFFE69B4);
 const Color kPinkShadow = Color(0x88FE69B4);
-const Color kLightBlue = Color(0xFF51C3FE);
-const Color kLightBlueShadow = Color(0x8851C3FE);
 const Color kDarkBlue = Color(0xFF18516E);
+const Color kOrange = Color(0xFFFC778A);
+const Color kOrangeShadow = Color(0x88FC778A);
+const Color kBlue = Color(0xFF1BB2BC);
+const Color kLightBlue = Color(0xFF64D1D2);

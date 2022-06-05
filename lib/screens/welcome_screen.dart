@@ -30,8 +30,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       ),
     );
     animation = ColorTween(
-      begin: kPink,
-      end: kPink,
+      begin: kOrange,
+      end: kOrange,
     ).animate(controller);
     controller.forward();
     controller.addListener(() {
@@ -78,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           TyperAnimatedText(
                             'See',
                             textStyle: TextStyle(
-                              fontSize: 60.0,
+                              fontSize: screenHeight * 0.08,
                               fontWeight: FontWeight.w900,
                               color: Colors.white,
                             ),
@@ -92,7 +92,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           TyperAnimatedText(
                             'chat',
                             textStyle: TextStyle(
-                              fontSize: 60.0,
+                              fontSize: screenHeight * 0.08,
                               fontWeight: FontWeight.w900,
                               color: kDarkBlue,
                             ),
@@ -102,9 +102,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ],
                   ),
-                  // SizedBox(
-                  //   height: MediaQuery.of(context).size.height * 0.1,
-                  // ),
                 ],
               ),
             ),
@@ -114,19 +111,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(screenHeight * 0.1),
+                  topRight: Radius.elliptical(
+                      screenHeight * 0.1, screenHeight * 0.07),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey[700],
-                    offset: Offset(0, 10),
-                    blurStyle: BlurStyle.normal,
-                    blurRadius: 30,
+                    color: Colors.black87,
+                    offset: Offset(screenHeight * -0.02, screenHeight * 0.005),
+                    spreadRadius: screenHeight * 0.005,
+                    blurRadius: screenHeight * 0.025,
                   ),
                 ],
                 color: Colors.white,
               ),
-              padding: EdgeInsets.only(left: 50, right: 50),
+              padding: EdgeInsets.only(
+                  left: screenHeight * 0.06, right: screenHeight * 0.06),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +138,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       color: kDarkBlue,
                       text: 'Login with email',
                       textColor: kDarkBlue,
-                      shadowColor: kLightBlueShadow,
                       onPressed: () {
                         Navigator.pushNamed(context, LoginScreen.id);
                       }),
@@ -147,9 +145,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: screenHeight * 0.03,
                   ),
                   RoundedButton(
-                      color: kPink,
+                      color: kOrange,
                       text: 'Get Started',
-                      shadowColor: kPinkShadow,
+                      shadowColor: kOrangeShadow,
                       textColor: Colors.white,
                       onPressed: () {
                         Navigator.pushNamed(context, RegistrationScreen.id);

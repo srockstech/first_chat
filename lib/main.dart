@@ -4,6 +4,7 @@ import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'constants.dart';
 
@@ -13,10 +14,13 @@ class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Firebase.initializeApp();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
-        primaryColor: kPink,
+        primaryColor: kOrange,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             splashFactory: InkRipple.splashFactory,

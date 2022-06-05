@@ -7,39 +7,58 @@ class RoundedButton extends StatelessWidget {
   final Function onPressed;
   final bool bordered;
   final Color shadowColor;
+
   RoundedButton(
-      {this.bordered = false, this.shadowColor = Colors.transparent, @required this.color, @required this.text, @required this.textColor, @required this.onPressed});
+      {this.bordered = false,
+      this.shadowColor = Colors.transparent,
+      @required this.color,
+      @required this.text,
+      @required this.textColor,
+      @required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    if(bordered == false) {
+    if (bordered == false) {
       return TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
           padding: EdgeInsets.all(screenHeight * 0.02),
           backgroundColor: color,
           shadowColor: shadowColor,
-          elevation: 18,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(screenHeight * 0.04), bottomLeft: Radius.circular(screenHeight * 0.04), bottomRight: Radius.circular(screenHeight * 0.04))),
+          elevation: screenHeight * 0.01,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(screenHeight * 0.04),
+                  bottomLeft: Radius.circular(screenHeight * 0.04),
+                  bottomRight: Radius.circular(screenHeight * 0.04))),
         ),
         child: Text(
           text,
-          style: TextStyle(fontSize: 16, color: textColor, letterSpacing: 0.5),
+          style: TextStyle(
+              fontSize: screenHeight * 0.02,
+              color: textColor,
+              letterSpacing: 0.5),
         ),
       );
-    }else{
+    } else {
       return OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           padding: EdgeInsets.all(screenHeight * 0.02),
-          side: BorderSide(color: color, width: 2),
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(screenHeight * 0.04), bottomLeft: Radius.circular(screenHeight * 0.04), bottomRight: Radius.circular(screenHeight * 0.04))),
+          side: BorderSide(color: color, width: screenHeight * 0.002),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(screenHeight * 0.04),
+                  bottomLeft: Radius.circular(screenHeight * 0.04),
+                  bottomRight: Radius.circular(screenHeight * 0.04))),
         ),
         child: Text(
           text,
-          style: TextStyle(fontSize: 16, color: textColor, letterSpacing: 0.5),
+          style: TextStyle(
+              fontSize: screenHeight * 0.02,
+              color: textColor,
+              letterSpacing: 0.5),
         ),
       );
     }
