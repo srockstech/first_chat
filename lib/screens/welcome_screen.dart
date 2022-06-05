@@ -136,7 +136,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   RoundedButton(
                       bordered: true,
                       color: kDarkBlue,
-                      text: 'Login with email',
+                      text: 'Login',
                       textColor: kDarkBlue,
                       onPressed: () {
                         Navigator.pushNamed(context, LoginScreen.id);

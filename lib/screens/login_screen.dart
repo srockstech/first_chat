@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/components/circular_icon_button.dart';
 import 'package:flash_chat/components/quote_bubble_text_field.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/design/custom_box_decoration.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -39,20 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     right: screenHeight * 0.06,
                     top: screenHeight * 0.16,
                     bottom: screenHeight * 0.04),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black87,
-                        offset:
-                            Offset(screenHeight * 0.02, screenHeight * 0.005),
-                        blurRadius: screenHeight * 0.025,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.elliptical(
-                          screenHeight * 0.1, screenHeight * 0.07),
-                    )),
+                decoration: CustomBoxDecoration.bottomLeftRoundCornerShadow(
+                    screenHeight),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -153,41 +142,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(screenHeight * 0.1),
-                            border: Border.all(
-                                color: kDarkBlue, width: screenHeight * 0.001),
+                        CircularIconButton(
+                          screenHeight: screenHeight,
+                          icon: Icon(
+                            FontAwesomeIcons.google,
                           ),
-                          margin: EdgeInsets.all(screenHeight * 0.01),
-                          height: screenHeight * 0.055,
-                          width: screenHeight * 0.055,
-                          child: IconButton(
-                            icon: Icon(
-                              FontAwesomeIcons.google,
-                            ),
-                            iconSize: screenHeight * 0.03,
-                            color: kDarkBlue,
-                            onPressed: () {},
-                          ),
+                          onPressed: () {},
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(screenHeight * 0.1),
-                            border: Border.all(
-                                color: kDarkBlue, width: screenHeight * 0.001),
+                        CircularIconButton(
+                          screenHeight: screenHeight,
+                          icon: Icon(
+                            FontAwesomeIcons.facebookF,
                           ),
-                          margin: EdgeInsets.all(screenHeight * 0.01),
-                          height: screenHeight * 0.055,
-                          width: screenHeight * 0.055,
-                          child: IconButton(
-                            icon: Icon(FontAwesomeIcons.facebookF),
-                            iconSize: screenHeight * 0.03,
-                            color: kDarkBlue,
-                            onPressed: () {},
-                          ),
+                          onPressed: () {},
                         ),
                       ],
                     ),

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/components/quote_bubble_text_field.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
@@ -20,6 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: ModalProgressHUD(
@@ -40,27 +42,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 height: 48.0,
               ),
-              TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
-              ),
+              QuoteBubbleTextField(
+                  screenHeight: screenHeight, onChanged: () {}),
               SizedBox(
                 height: 8.0,
               ),
-              TextField(
-                obscureText: true,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your password'),
-              ),
+              QuoteBubbleTextField(
+                  screenHeight: screenHeight, onChanged: () {}),
               SizedBox(
                 height: 24.0,
               ),
