@@ -48,27 +48,64 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: kDarkBlue,
-      appBar: AppBar(
-        elevation: 0,
-        leading: null,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              _auth.signOut();
-              Navigator.pop(context);
-            },
-          ),
-        ],
-        title: Text('⚡️Chat'),
-        backgroundColor: kDarkBlue,
-      ),
+      backgroundColor: kPink,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Container(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _auth.signOut();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Rohan',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  FontAwesomeIcons.phone,
+                                  color: Colors.white,
+                                )),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  FontAwesomeIcons.video,
+                                  color: Colors.white,
+                                )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             StreamBuilder<QuerySnapshot>(
               stream: _firestore.collection('messages').snapshots(),
               builder: (context, snapshot) {
@@ -92,7 +129,24 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
                 return Expanded(
                   child: Container(
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.elliptical(
+                            screenHeight * 0.1, screenHeight * 0.07),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black87,
+                          offset: Offset(
+                              screenHeight * -0.02, screenHeight * 0.005),
+                          spreadRadius: screenHeight * 0.005,
+                          blurRadius: screenHeight * 0.025,
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.only(
+                        left: screenHeight * 0.06, right: screenHeight * 0.06),
                     child: ListView(
                       children: messageWidgets,
                     ),
