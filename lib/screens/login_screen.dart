@@ -28,14 +28,14 @@ class _LoginScreenState extends State<LoginScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: kOrange,
+      backgroundColor: kPink,
       body: SafeArea(
         child: ModalProgressHUD(
           opacity: 0.4,
           progressIndicator: RefreshProgressIndicator(
             color: kDarkBlue,
             strokeWidth: 3,
-            backgroundColor: kOrangeShadow,
+            backgroundColor: kPinkShadow,
           ),
           color: Colors.black,
           inAsyncCall: showSpinner,
@@ -118,8 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: screenHeight * 0.04,
                     ),
                     RoundedButton(
-                      color: kOrange,
-                      shadowColor: kOrangeShadow,
+                      color: kPink,
+                      shadowColor: kPinkShadow,
                       text: 'Login',
                       textColor: Colors.white,
                       onPressed: () async {

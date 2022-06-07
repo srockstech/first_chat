@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: kOrange, //animation.value
+      backgroundColor: kPink, //animation.value
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,7 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           Expanded(
             flex: 8,
             child: Container(
-              color: kOrange, //animation.value
+              color: kPink, //animation.value
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -118,9 +118,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: screenHeight * 0.04,
                   ),
                   RoundedButton(
-                      color: kOrange,
+                      color: kPink,
                       text: 'Get Started',
-                      shadowColor: kOrangeShadow,
+                      shadowColor: kPinkShadow,
                       textColor: Colors.white,
                       onPressed: () {
                         Navigator.pushNamed(context, RegistrationScreen.id);

@@ -20,7 +20,7 @@ class FlashChat extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
-        primaryColor: kOrange,
+        primaryColor: kPink,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             splashFactory: InkRipple.splashFactory,

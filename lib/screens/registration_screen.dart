@@ -32,14 +32,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: kOrange,
+      backgroundColor: kPink,
       body: SafeArea(
         child: ModalProgressHUD(
           opacity: 0.4,
           progressIndicator: RefreshProgressIndicator(
             color: kDarkBlue,
             strokeWidth: 3,
-            backgroundColor: kOrangeShadow,
+            backgroundColor: kPinkShadow,
           ),
           color: Colors.black,
           inAsyncCall: showSpinner,
@@ -136,8 +136,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: screenHeight * 0.04,
                   ),
                   RoundedButton(
-                    color: kOrange,
-                    shadowColor: kOrangeShadow,
+                    color: kPink,
+                    shadowColor: kPinkShadow,
                     text: 'Register',
                     textColor: Colors.white,
                     onPressed: () async {
@@ -147,7 +147,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       try {
                         final newUser =
                             await _auth.createUserWithEmailAndPassword(
-                                email: email, password: password);
+                          email: email,
+                          password: password,
+                        );
                         if (newUser != null) {
                           Navigator.pushNamed(context, ChatScreen.id);
                         }
