@@ -34,7 +34,7 @@ class FlashChat extends StatelessWidget {
           ),
         ),
         splashFactory: InkRipple.splashFactory,
-        splashColor: kDarkBlue,
+        splashColor: kPink,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: kDarkBlue,
