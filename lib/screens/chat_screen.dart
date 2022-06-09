@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/quote_bubble_text_field.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/design/custom_box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -129,22 +130,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
                 return Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.elliptical(
-                            screenHeight * 0.1, screenHeight * 0.07),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black87,
-                          offset: Offset(
-                              screenHeight * -0.02, screenHeight * 0.005),
-                          spreadRadius: screenHeight * 0.005,
-                          blurRadius: screenHeight * 0.025,
-                        ),
-                      ],
-                      color: Colors.white,
-                    ),
+                    decoration: CustomBoxDecoration.topRightRoundCornerShadow(
+                        screenHeight),
                     padding: EdgeInsets.only(
                         left: screenHeight * 0.06, right: screenHeight * 0.06),
                     child: ListView(

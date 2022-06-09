@@ -1,5 +1,6 @@
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/design/custom_box_decoration.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
@@ -93,21 +94,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           Expanded(
             flex: 5,
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.elliptical(
-                      screenHeight * 0.1, screenHeight * 0.07),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black87,
-                    offset: Offset(screenHeight * -0.02, screenHeight * 0.005),
-                    spreadRadius: screenHeight * 0.005,
-                    blurRadius: screenHeight * 0.025,
-                  ),
-                ],
-                color: Colors.white,
-              ),
+              decoration:
+                  CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
               padding: EdgeInsets.only(
                   left: screenHeight * 0.06, right: screenHeight * 0.06),
               child: Column(
