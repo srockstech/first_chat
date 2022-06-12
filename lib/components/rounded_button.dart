@@ -7,9 +7,13 @@ class RoundedButton extends StatelessWidget {
   final Function onPressed;
   final bool bordered;
   final Color shadowColor;
+  final bool topLeftSharpCorner;
+  final bool bottomRightSharpCorner;
 
   RoundedButton(
       {this.bordered = false,
+      this.topLeftSharpCorner,
+      this.bottomRightSharpCorner,
       this.shadowColor = Colors.transparent,
       @required this.color,
       @required this.text,
@@ -28,10 +32,17 @@ class RoundedButton extends StatelessWidget {
           shadowColor: shadowColor,
           elevation: screenHeight * 0.02,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(screenHeight * 0.04),
-                  bottomLeft: Radius.circular(screenHeight * 0.04),
-                  bottomRight: Radius.circular(screenHeight * 0.04))),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(screenHeight * 0.04),
+              topLeft: (topLeftSharpCorner != true)
+                  ? Radius.circular(screenHeight * 0.04)
+                  : Radius.circular(0),
+              bottomLeft: Radius.circular(screenHeight * 0.04),
+              bottomRight: (bottomRightSharpCorner != true)
+                  ? Radius.circular(screenHeight * 0.04)
+                  : Radius.circular(0),
+            ),
+          ),
         ),
         child: Text(
           text,
@@ -51,10 +62,17 @@ class RoundedButton extends StatelessWidget {
             width: screenHeight * 0.002,
           ),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(screenHeight * 0.04),
-                  bottomLeft: Radius.circular(screenHeight * 0.04),
-                  bottomRight: Radius.circular(screenHeight * 0.04))),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(screenHeight * 0.04),
+              topLeft: (topLeftSharpCorner != true)
+                  ? Radius.circular(screenHeight * 0.04)
+                  : Radius.circular(0),
+              bottomLeft: Radius.circular(screenHeight * 0.04),
+              bottomRight: (bottomRightSharpCorner != true)
+                  ? Radius.circular(screenHeight * 0.04)
+                  : Radius.circular(0),
+            ),
+          ),
         ),
         child: Text(
           text,

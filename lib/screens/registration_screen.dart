@@ -136,6 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: screenHeight * 0.04,
                   ),
                   RoundedButton(
+                    topLeftSharpCorner: true,
                     color: kPink,
                     shadowColor: kPinkShadow,
                     text: 'Register',

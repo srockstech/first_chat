@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/quote_bubble_text_field.dart';
+import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/design/custom_box_decoration.dart';
 import 'package:flutter/material.dart';
@@ -118,14 +119,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }
                 final messages = snapshot.data.docs;
-                List<Text> messageWidgets = [];
+                List<Widget> messageWidgets = [];
                 for (var message in messages) {
                   final messageText = message.get('text');
                   final messageSender = message.get('sender');
-                  final messageWidget = Text(
-                    '$messageText from $messageSender',
-                    style: TextStyle(fontSize: 45),
-                  );
+                  final messageWidget = RoundedButton(
+                      color: kPink,
+                      text: '$messageText',
+                      textColor: Colors.white,
+                      bottomRightSharpCorner: true,
+                      onPressed: () {});
                   messageWidgets.add(messageWidget);
                 }
                 return Expanded(
@@ -135,6 +138,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     padding: EdgeInsets.only(
                         left: screenHeight * 0.06, right: screenHeight * 0.06),
                     child: ListView(
+                      // keyboardDismissBehavior:
+                      // ScrollViewKeyboardDismissBehavior.onDrag,
                       children: messageWidgets,
                     ),
                   ),

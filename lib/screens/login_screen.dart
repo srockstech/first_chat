@@ -118,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: screenHeight * 0.04,
                     ),
                     RoundedButton(
+                      topLeftSharpCorner: true,
                       color: kPink,
                       shadowColor: kPinkShadow,
                       text: 'Login',

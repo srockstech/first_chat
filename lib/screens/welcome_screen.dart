@@ -106,6 +106,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: screenHeight * 0.04,
                   ),
                   RoundedButton(
+                      topLeftSharpCorner: true,
                       color: kPink,
                       text: 'Get Started',
                       shadowColor: kPinkShadow,
@@ -117,6 +118,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     height: screenHeight * 0.03,
                   ),
                   RoundedButton(
+                      topLeftSharpCorner: true,
                       bordered: true,
                       color: kDarkBlue,
                       text: 'Already a member? Login',
