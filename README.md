@@ -1,1 +1,1 @@
-This is a chat application.
+# SeeChat - A Chat Application
