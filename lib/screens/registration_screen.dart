@@ -37,164 +37,164 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: ModalProgressHUD(
           opacity: 0.4,
           progressIndicator: RefreshProgressIndicator(
-            color: kDarkBlue,
+            color: Colors.white,
             strokeWidth: 3,
-            backgroundColor: kPinkShadow,
+            backgroundColor: kLightBrown,
           ),
           color: Colors.black,
           inAsyncCall: showSpinner,
-          child: ListView(children: [
-            Container(
-              padding: EdgeInsets.only(
-                  left: screenHeight * 0.06,
-                  right: screenHeight * 0.06,
-                  top: screenHeight * 0.08,
-                  bottom: screenHeight * 0.04),
-              decoration:
-                  CustomBoxDecoration.bottomLeftRoundCornerShadow(screenHeight),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Hero(
-                    tag: 'logo',
-                    child: Container(
-                      height: screenHeight * 0.22,
-                      child: Image.asset('images/logo_3.png'),
+          child: ListView(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                    left: screenHeight * 0.06,
+                    right: screenHeight * 0.06,
+                    top: screenHeight * 0.1,
+                    bottom: screenHeight * 0.08),
+                decoration: CustomBoxDecoration.bottomLeftRoundCornerShadow(
+                    screenHeight),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Hero(
+                      tag: 'logo',
+                      child: Container(
+                        height: screenHeight * 0.22,
+                        child: Image.asset('images/logo_4.png'),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.05,
-                  ),
-                  QuoteBubbleTextField(
-                    screenHeight: screenHeight,
-                    keyboardType: TextInputType.name,
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: kDarkBlue,
+                    SizedBox(
+                      height: screenHeight * 0.05,
                     ),
-                    label: 'Name',
-                    onChanged: (value) {
-                      name = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.019,
-                  ),
-                  QuoteBubbleTextField(
-                    screenHeight: screenHeight,
-                    keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icon(
-                      Icons.email_rounded,
-                      color: kDarkBlue,
+                    QuoteBubbleTextField(
+                      screenHeight: screenHeight,
+                      keyboardType: TextInputType.name,
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: kBlack,
+                      ),
+                      label: 'Name',
+                      onChanged: (value) {
+                        name = value;
+                      },
                     ),
-                    label: 'Email',
-                    onChanged: (value) {
-                      email = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.019,
-                  ),
-                  QuoteBubbleTextField(
-                    screenHeight: screenHeight,
-                    obscureText: hiddenPassword,
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: kDarkBlue,
+                    SizedBox(
+                      height: screenHeight * 0.019,
                     ),
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        if (hiddenPassword == true) {
+                    QuoteBubbleTextField(
+                      screenHeight: screenHeight,
+                      keyboardType: TextInputType.emailAddress,
+                      prefixIcon: Icon(
+                        Icons.email_rounded,
+                        color: kBlack,
+                      ),
+                      label: 'Email',
+                      onChanged: (value) {
+                        email = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.019,
+                    ),
+                    QuoteBubbleTextField(
+                      screenHeight: screenHeight,
+                      obscureText: hiddenPassword,
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: kBlack,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          if (hiddenPassword == true) {
+                            setState(() {
+                              hiddenPassword = false;
+                            });
+                          } else {
+                            setState(() {
+                              hiddenPassword = true;
+                            });
+                          }
+                        },
+                        icon: (hiddenPassword == true)
+                            ? Icon(
+                                FontAwesomeIcons.eyeSlash,
+                                size: screenHeight * 0.022,
+                                color: kBlack,
+                              )
+                            : Icon(
+                                FontAwesomeIcons.eye,
+                                size: screenHeight * 0.022,
+                                color: kBlack,
+                              ),
+                      ),
+                      label: 'Password',
+                      onChanged: (value) {
+                        password = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.04,
+                    ),
+                    RoundedButton(
+                      topLeftSharpCorner: true,
+                      color: kLightBrown,
+                      shadowColor: kLightBrownShadow,
+                      text: 'Register',
+                      textColor: Colors.white,
+                      onPressed: () async {
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        try {
+                          final newUser =
+                              await _auth.createUserWithEmailAndPassword(
+                            email: email,
+                            password: password,
+                          );
+                          if (newUser != null) {
+                            Navigator.pushNamed(context, ChatScreen.id);
+                          }
                           setState(() {
-                            hiddenPassword = false;
+                            showSpinner = false;
                           });
-                        } else {
-                          setState(() {
-                            hiddenPassword = true;
-                          });
+                        } catch (e) {
+                          print(e);
                         }
                       },
-                      icon: (hiddenPassword == true)
-                          ? Icon(
-                              FontAwesomeIcons.eyeSlash,
-                              size: screenHeight * 0.022,
-                              color: kDarkBlue,
-                            )
-                          : Icon(
-                              FontAwesomeIcons.eye,
-                              size: screenHeight * 0.022,
-                              color: kDarkBlue,
-                            ),
                     ),
-                    label: 'Password',
-                    onChanged: (value) {
-                      password = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.04,
-                  ),
-                  RoundedButton(
-                    topLeftSharpCorner: true,
-                    color: kPink,
-                    shadowColor: kPinkShadow,
-                    text: 'Register',
-                    textColor: Colors.white,
-                    onPressed: () async {
-                      setState(() {
-                        showSpinner = true;
-                      });
-                      try {
-                        final newUser =
-                            await _auth.createUserWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-                        if (newUser != null) {
-                          Navigator.pushNamed(context, ChatScreen.id);
-                        }
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.025,
-                  ),
-                  Divider(
-                    color: Colors.grey[400],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularIconButton(
-                        screenHeight: screenHeight,
-                        icon: Icon(
-                          FontAwesomeIcons.google,
-                        ),
-                        onPressed: () {},
+                    SizedBox(
+                      height: screenHeight * 0.025,
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.012,
+                      width: screenHeight * 0.4,
+                      child: Divider(
+                        height: 0,
+                        color: Colors.grey,
+                        thickness: screenHeight * 0.001,
                       ),
-                      CircularIconButton(
-                        screenHeight: screenHeight,
-                        icon: Icon(
-                          FontAwesomeIcons.facebookF,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularIconButton(
+                          screenHeight: screenHeight,
+                          icon: Image.asset('images/google_logo.png'),
+                          onPressed: () {},
                         ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ],
+                        CircularIconButton(
+                          screenHeight: screenHeight,
+                          icon: Image.asset('images/facebook_logo.png'),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              height: screenHeight * 0.1,
-              color: Colors.transparent,
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );

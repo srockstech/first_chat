@@ -24,20 +24,20 @@ class FlashChat extends StatelessWidget {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             splashFactory: InkRipple.splashFactory,
-            primary: kDarkBlue,
+            primary: kBlack,
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: TextButton.styleFrom(
             splashFactory: InkRipple.splashFactory,
-            primary: kDarkBlue,
+            primary: kBlack,
           ),
         ),
         splashFactory: InkRipple.splashFactory,
         splashColor: kPink,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: kDarkBlue,
+          secondary: kBlack,
           tertiary: Colors.white,
         ),
       ),

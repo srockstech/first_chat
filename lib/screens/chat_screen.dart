@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/components/circular_icon_button.dart';
 import 'package:flash_chat/components/quote_bubble_text_field.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
@@ -50,62 +51,39 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: kPink,
+      backgroundColor: kDarkBrown,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          _auth.signOut();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Rohan',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  FontAwesomeIcons.phone,
-                                  color: Colors.white,
-                                )),
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  FontAwesomeIcons.video,
-                                  color: Colors.white,
-                                )),
-                          ],
-                        ),
-                      ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.01, bottom: screenHeight * 0.01),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RoundedButton(
+                      color: Colors.transparent,
+                      text: 'Back',
+                      textColor: kCream,
+                      onPressed: () {
+                        _auth.signOut();
+                        Navigator.pop(context);
+                      },
                     ),
-                  ),
-                ],
+                    RoundedButton(
+                      color: Colors.transparent,
+                      text: 'Search',
+                      textColor: kCream,
+                      onPressed: () {
+                        _auth.signOut();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
             StreamBuilder<QuerySnapshot>(
@@ -114,7 +92,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 if (!snapshot.hasData) {
                   return Center(
                     child: CircularProgressIndicator(
-                      backgroundColor: kDarkBlue,
+                      backgroundColor: kBlack,
+                      color: Colors.white,
                     ),
                   );
                 }
@@ -123,24 +102,99 @@ class _ChatScreenState extends State<ChatScreen> {
                 for (var message in messages) {
                   final messageText = message.get('text');
                   final messageSender = message.get('sender');
-                  final messageWidget = RoundedButton(
-                      color: kPink,
-                      text: '$messageText',
-                      textColor: Colors.white,
-                      bottomRightSharpCorner: true,
-                      onPressed: () {});
+                  final messageWidget = Padding(
+                    padding: EdgeInsets.only(
+                        bottom: screenHeight * 0.005,
+                        left: screenHeight * 0.01,
+                        right: screenHeight * 0.01),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Flexible(flex: 2, child: SizedBox()),
+                        Flexible(
+                          flex: 10,
+                          child: RoundedButton(
+                              color: kLightBrown,
+                              text: '$messageText',
+                              textColor: Colors.white,
+                              bottomRightSharpCorner: true,
+                              onPressed: () {}),
+                        ),
+                      ],
+                    ),
+                  );
                   messageWidgets.add(messageWidget);
                 }
                 return Expanded(
                   child: Container(
                     decoration: CustomBoxDecoration.topRightRoundCornerShadow(
                         screenHeight),
-                    padding: EdgeInsets.only(
-                        left: screenHeight * 0.06, right: screenHeight * 0.06),
-                    child: ListView(
-                      // keyboardDismissBehavior:
-                      // ScrollViewKeyboardDismissBehavior.onDrag,
-                      children: messageWidgets,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: screenHeight * 0.04,
+                              right: screenHeight * 0.04,
+                              top: screenHeight * 0.01,
+                              bottom: screenHeight * 0.003),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  'Tanya Verma',
+                                  style: TextStyle(
+                                      color: kDarkBrown,
+                                      fontSize: screenHeight * 0.026,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(
+                                width: screenHeight * 0.06,
+                              ),
+                              Row(
+                                children: [
+                                  CircularIconButton(
+                                    screenHeight: screenHeight,
+                                    height: screenHeight * 0.045,
+                                    width: screenHeight * 0.045,
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      FontAwesomeIcons.phone,
+                                      color: kDarkBrown,
+                                      size: screenHeight * 0.02,
+                                    ),
+                                  ),
+                                  CircularIconButton(
+                                    screenHeight: screenHeight,
+                                    height: screenHeight * 0.045,
+                                    width: screenHeight * 0.045,
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      FontAwesomeIcons.video,
+                                      color: kDarkBrown,
+                                      size: screenHeight * 0.02,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.012,
+                          width: screenHeight * 0.4,
+                          child: Divider(
+                            height: 0,
+                            thickness: screenHeight * 0.0015,
+                          ),
+                        ),
+                        Flexible(
+                          child: ListView(
+                            children: messageWidgets,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -155,7 +209,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: <Widget>[
                     Expanded(
                       child: QuoteBubbleTextField(
-                          textColor: kPink,
+                          textColor: kLightBrown,
+                          cursorColor: kLightBrown,
                           haveSharpCorner: false,
                           maxLines: 5,
                           minLines: 1,
@@ -167,7 +222,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           prefixIcon: IconButton(
                             icon: Icon(
                               FontAwesomeIcons.faceSmileBeam,
-                              color: kPink,
+                              color: kLightBrown,
                               size: 24,
                             ),
                             splashRadius: screenHeight * 0.03,
@@ -176,7 +231,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           suffixIcon: IconButton(
                             icon: Icon(
                               FontAwesomeIcons.paperclip,
-                              color: kLightPink,
+                              color: Colors.grey[600],
                               size: 20,
                             ),
                             splashRadius: screenHeight * 0.03,
@@ -184,7 +239,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           screenHeight: screenHeight,
                           hintText: 'Type your message...',
-                          hintTextColor: kLightPink,
+                          hintTextColor: Colors.grey[600],
                           onChanged: (value) {
                             message = value;
                           }),
@@ -193,8 +248,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       margin: EdgeInsets.only(
                           left: screenHeight * 0.01, top: screenHeight * 0.004),
                       height: screenHeight * 0.06,
-                      decoration:
-                          BoxDecoration(shape: BoxShape.circle, color: kPink),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: kLightBrown),
                       child: IconButton(
                         padding: EdgeInsets.only(right: screenHeight * 0.003),
                         splashRadius: 1,

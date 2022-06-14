@@ -33,9 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: ModalProgressHUD(
           opacity: 0.4,
           progressIndicator: RefreshProgressIndicator(
-            color: kDarkBlue,
+            color: Colors.white,
             strokeWidth: 3,
-            backgroundColor: kPinkShadow,
+            backgroundColor: kLightBrown,
           ),
           color: Colors.black,
           inAsyncCall: showSpinner,
@@ -45,8 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.only(
                     left: screenHeight * 0.06,
                     right: screenHeight * 0.06,
-                    top: screenHeight * 0.16,
-                    bottom: screenHeight * 0.04),
+                    top: screenHeight * 0.14,
+                    bottom: screenHeight * 0.12),
                 decoration: CustomBoxDecoration.bottomLeftRoundCornerShadow(
                     screenHeight),
                 child: Column(
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       tag: 'logo',
                       child: Container(
                         height: screenHeight * 0.22,
-                        child: Image.asset('images/logo_3.png'),
+                        child: Image.asset('images/logo_4.png'),
                       ),
                     ),
                     SizedBox(
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: Icon(
                         Icons.email_rounded,
-                        color: kDarkBlue,
+                        color: kBlack,
                       ),
                       label: 'Email',
                       onChanged: (value) {
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscureText: hiddenPassword,
                       prefixIcon: Icon(
                         Icons.lock,
-                        color: kDarkBlue,
+                        color: kBlack,
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -101,12 +101,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? Icon(
                                 FontAwesomeIcons.eyeSlash,
                                 size: screenHeight * 0.022,
-                                color: kDarkBlue,
+                                color: kBlack,
                               )
                             : Icon(
                                 FontAwesomeIcons.eye,
                                 size: screenHeight * 0.022,
-                                color: kDarkBlue,
+                                color: kBlack,
                               ),
                       ),
                       label: 'Password',
@@ -119,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     RoundedButton(
                       topLeftSharpCorner: true,
-                      color: kPink,
-                      shadowColor: kPinkShadow,
+                      color: kLightBrown,
+                      shadowColor: kLightBrownShadow,
                       text: 'Login',
                       textColor: Colors.white,
                       onPressed: () async {
@@ -144,34 +144,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: screenHeight * 0.025,
                     ),
-                    Divider(
-                      color: Colors.grey[400],
+                    SizedBox(
+                      height: screenHeight * 0.012,
+                      width: screenHeight * 0.4,
+                      child: Divider(
+                        height: 0,
+                        color: Colors.grey,
+                        thickness: screenHeight * 0.001,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircularIconButton(
                           screenHeight: screenHeight,
-                          icon: Icon(
-                            FontAwesomeIcons.google,
-                          ),
+                          icon: Image.asset('images/google_logo.png'),
                           onPressed: () {},
                         ),
                         CircularIconButton(
                           screenHeight: screenHeight,
-                          icon: Icon(
-                            FontAwesomeIcons.facebookF,
-                          ),
+                          icon: Image.asset('images/facebook_logo.png'),
                           onPressed: () {},
                         ),
                       ],
                     ),
                   ],
                 ),
-              ),
-              Container(
-                height: screenHeight * 0.1,
-                color: Colors.transparent,
               ),
             ],
           ),

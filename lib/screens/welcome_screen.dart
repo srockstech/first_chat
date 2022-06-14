@@ -1,10 +1,10 @@
+import 'package:flash_chat/components/circular_icon_button.dart';
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/design/custom_box_decoration.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'WelcomeScreen';
@@ -62,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   Hero(
                     tag: 'logo',
                     child: Container(
-                      child: Image.asset('images/logo_3.png'),
+                      child: Image.asset('images/logo_4.png'),
                       height: screenHeight * 0.1,
                     ),
                   ),
@@ -70,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'See',
+                        'first',
                         style: TextStyle(
                           fontSize: screenHeight * 0.08,
                           fontWeight: FontWeight.w900,
@@ -82,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         style: TextStyle(
                           fontSize: screenHeight * 0.08,
                           fontWeight: FontWeight.w900,
-                          color: kDarkBlue,
+                          color: kDarkBrown,
                         ),
                       ),
                     ],
@@ -92,7 +92,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Container(
               decoration:
                   CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
@@ -107,9 +107,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                   RoundedButton(
                       topLeftSharpCorner: true,
-                      color: kPink,
+                      color: kLightBrown,
                       text: 'Get Started',
-                      shadowColor: kPinkShadow,
+                      shadowColor: kLightBrownShadow,
                       textColor: Colors.white,
                       onPressed: () {
                         Navigator.pushNamed(context, RegistrationScreen.id);
@@ -120,56 +120,36 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   RoundedButton(
                       topLeftSharpCorner: true,
                       bordered: true,
-                      color: kDarkBlue,
+                      color: kBlack,
                       text: 'Already a member? Login',
-                      textColor: kDarkBlue,
+                      textColor: kBlack,
                       onPressed: () {
                         Navigator.pushNamed(context, LoginScreen.id);
                       }),
                   SizedBox(
                     height: screenHeight * 0.025,
                   ),
-                  Divider(
-                    color: Colors.grey[400],
+                  SizedBox(
+                    height: screenHeight * 0.012,
+                    width: screenHeight * 0.4,
+                    child: Divider(
+                      height: 0,
+                      color: Colors.grey,
+                      thickness: screenHeight * 0.001,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(screenHeight * 0.1),
-                          border: Border.all(
-                              color: kDarkBlue, width: screenHeight * 0.001),
-                        ),
-                        margin: EdgeInsets.all(screenHeight * 0.01),
-                        height: screenHeight * 0.055,
-                        width: screenHeight * 0.055,
-                        child: IconButton(
-                          icon: Icon(
-                            FontAwesomeIcons.google,
-                          ),
-                          iconSize: screenHeight * 0.03,
-                          color: kDarkBlue,
-                          onPressed: () {},
-                        ),
+                      CircularIconButton(
+                        screenHeight: screenHeight,
+                        icon: Image.asset('images/google_logo.png'),
+                        onPressed: () {},
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(screenHeight * 0.1),
-                          border: Border.all(
-                              color: kDarkBlue, width: screenHeight * 0.001),
-                        ),
-                        margin: EdgeInsets.all(screenHeight * 0.01),
-                        height: screenHeight * 0.055,
-                        width: screenHeight * 0.055,
-                        child: IconButton(
-                          icon: Icon(FontAwesomeIcons.facebookF),
-                          iconSize: screenHeight * 0.03,
-                          color: kDarkBlue,
-                          onPressed: () {},
-                        ),
+                      CircularIconButton(
+                        screenHeight: screenHeight,
+                        icon: Image.asset('images/facebook_logo.png'),
+                        onPressed: () {},
                       ),
                     ],
                   ),
