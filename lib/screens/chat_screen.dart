@@ -20,6 +20,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final _firestore = FirebaseFirestore.instance;
   User loggedInUser;
   String message;
+  final messageTextController = TextEditingController();
 
   @override
   void initState() {
@@ -209,6 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: <Widget>[
                     Expanded(
                       child: QuoteBubbleTextField(
+                          controller: messageTextController,
                           textColor: kLightBrown,
                           cursorColor: kLightBrown,
                           haveSharpCorner: false,
@@ -256,6 +258,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         icon: Icon(FontAwesomeIcons.solidPaperPlane,
                             color: Colors.white, size: 20),
                         onPressed: () async {
+                          messageTextController.clear();
                           await _firestore.collection('messages').add({
                             'text': message,
                             'sender': loggedInUser.email,

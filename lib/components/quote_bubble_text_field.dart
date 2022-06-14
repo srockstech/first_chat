@@ -22,6 +22,7 @@ class QuoteBubbleTextField extends StatelessWidget {
     this.maxLines = 1,
     this.minLines,
     this.keyboardType,
+    this.controller,
   });
 
   final Function onChanged;
@@ -43,12 +44,14 @@ class QuoteBubbleTextField extends StatelessWidget {
   final int maxLines;
   final int minLines;
   final TextInputType keyboardType;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(splashColor: Colors.transparent),
       child: TextField(
+        controller: controller,
         obscureText: obscureText,
         keyboardType: keyboardType,
         maxLines: maxLines,
