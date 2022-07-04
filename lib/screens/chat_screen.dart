@@ -8,6 +8,9 @@ import 'package:flash_chat/design/custom_box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+final _firestore = FirebaseFirestore.instance;
+User loggedInUser;
+
 class ChatScreen extends StatefulWidget {
   static const String id = 'ChatScreen';
 
@@ -17,8 +20,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
-  User loggedInUser;
   String message;
   final messageTextController = TextEditingController();
 
@@ -87,120 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
-            StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('messages').snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: kBlack,
-                      color: Colors.white,
-                    ),
-                  );
-                }
-                final messages = snapshot.data.docs;
-                List<Widget> messageWidgets = [];
-                for (var message in messages) {
-                  final messageText = message.get('text');
-                  final messageSender = message.get('sender');
-                  final messageWidget = Padding(
-                    padding: EdgeInsets.only(
-                        bottom: screenHeight * 0.005,
-                        left: screenHeight * 0.01,
-                        right: screenHeight * 0.01),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Flexible(flex: 2, child: SizedBox()),
-                        Flexible(
-                          flex: 10,
-                          child: RoundedButton(
-                              color: kLightBrown,
-                              text: '$messageText',
-                              textColor: Colors.white,
-                              bottomRightSharpCorner: true,
-                              onPressed: () {}),
-                        ),
-                      ],
-                    ),
-                  );
-                  messageWidgets.add(messageWidget);
-                }
-                return Expanded(
-                  child: Container(
-                    decoration: CustomBoxDecoration.topRightRoundCornerShadow(
-                        screenHeight),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: screenHeight * 0.04,
-                              right: screenHeight * 0.04,
-                              top: screenHeight * 0.01,
-                              bottom: screenHeight * 0.003),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  'Tanya Verma',
-                                  style: TextStyle(
-                                      color: kDarkBrown,
-                                      fontSize: screenHeight * 0.026,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              SizedBox(
-                                width: screenHeight * 0.06,
-                              ),
-                              Row(
-                                children: [
-                                  CircularIconButton(
-                                    screenHeight: screenHeight,
-                                    height: screenHeight * 0.045,
-                                    width: screenHeight * 0.045,
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      FontAwesomeIcons.phone,
-                                      color: kDarkBrown,
-                                      size: screenHeight * 0.02,
-                                    ),
-                                  ),
-                                  CircularIconButton(
-                                    screenHeight: screenHeight,
-                                    height: screenHeight * 0.045,
-                                    width: screenHeight * 0.045,
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      FontAwesomeIcons.video,
-                                      color: kDarkBrown,
-                                      size: screenHeight * 0.02,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.012,
-                          width: screenHeight * 0.4,
-                          child: Divider(
-                            height: 0,
-                            thickness: screenHeight * 0.0015,
-                          ),
-                        ),
-                        Flexible(
-                          child: ListView(
-                            children: messageWidgets,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+            MessagesStream(screenHeight: screenHeight),
             Container(
               decoration: kMessageContainerDecoration,
               child: Padding(
@@ -272,6 +160,157 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessagesStream extends StatelessWidget {
+  final screenHeight;
+
+  MessagesStream({this.screenHeight});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection('messages').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: kBlack,
+              color: Colors.white,
+            ),
+          );
+        }
+        final messages = snapshot.data.docs;
+        List<Widget> messageWidgets = [];
+        for (var message in messages) {
+          final messageText = message.get('text');
+          final messageSender = message.get('sender');
+
+          final messageWidget = MessageBubble(
+            screenHeight: screenHeight,
+            messageText: messageText,
+            messageSender: messageSender,
+            isMe: messageSender == loggedInUser.email,
+          );
+          messageWidgets.add(messageWidget);
+        }
+        return Expanded(
+          child: Container(
+            decoration:
+                CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: screenHeight * 0.04,
+                      right: screenHeight * 0.04,
+                      top: screenHeight * 0.01,
+                      bottom: screenHeight * 0.003),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'Tanya Verma',
+                          style: TextStyle(
+                              color: kDarkBrown,
+                              fontSize: screenHeight * 0.026,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        width: screenHeight * 0.06,
+                      ),
+                      Row(
+                        children: [
+                          CircularIconButton(
+                            screenHeight: screenHeight,
+                            height: screenHeight * 0.045,
+                            width: screenHeight * 0.045,
+                            onPressed: () {},
+                            icon: Icon(
+                              FontAwesomeIcons.phone,
+                              color: kDarkBrown,
+                              size: screenHeight * 0.02,
+                            ),
+                          ),
+                          CircularIconButton(
+                            screenHeight: screenHeight,
+                            height: screenHeight * 0.045,
+                            width: screenHeight * 0.045,
+                            onPressed: () {},
+                            icon: Icon(
+                              FontAwesomeIcons.video,
+                              color: kDarkBrown,
+                              size: screenHeight * 0.02,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.012,
+                  width: screenHeight * 0.4,
+                  child: Divider(
+                    height: 0,
+                    thickness: screenHeight * 0.0015,
+                  ),
+                ),
+                Flexible(
+                  child: ListView(
+                    children: messageWidgets,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  const MessageBubble({
+    @required this.screenHeight,
+    @required this.messageText,
+    @required this.messageSender,
+    @required this.isMe,
+  });
+
+  final double screenHeight;
+  final String messageText;
+  final String messageSender;
+  final bool isMe;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          bottom: screenHeight * 0.005,
+          left: screenHeight * 0.01,
+          right: screenHeight * 0.01),
+      child: Row(
+        mainAxisAlignment:
+            (isMe) ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          Flexible(flex: 2, child: SizedBox()),
+          Flexible(
+            flex: 10,
+            child: RoundedButton(
+                color: (isMe) ? kLightBrown : kCream,
+                text: '$messageText',
+                textColor: (isMe) ? Colors.white : Colors.grey[800],
+                bottomRightSharpCorner: (isMe) ? true : false,
+                topLeftSharpCorner: (isMe) ? false : true,
+                onPressed: () {}),
+          ),
+        ],
       ),
     );
   }
