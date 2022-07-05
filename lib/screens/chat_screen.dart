@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedInUser;
+int messageSerial = 0;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'ChatScreen';
@@ -21,6 +22,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   String message;
+
   final messageTextController = TextEditingController();
 
   @override
@@ -41,16 +43,20 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var document in snapshot.docs) {
-        print(document.data());
-      }
+  void setMessageSerialToLast() async {
+    final messages =
+        await _firestore.collection('messages').orderBy('serialNumber').get();
+    for (var message in messages.docs) {
+      messageSerial = message.get('serialNumber');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(
+      Duration(seconds: 0),
+      () => setMessageSerialToLast(),
+    );
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: kDarkBrown,
@@ -146,11 +152,19 @@ class _ChatScreenState extends State<ChatScreen> {
                         icon: Icon(FontAwesomeIcons.solidPaperPlane,
                             color: Colors.white, size: 20),
                         onPressed: () async {
-                          messageTextController.clear();
-                          await _firestore.collection('messages').add({
-                            'text': message,
-                            'sender': loggedInUser.email,
-                          });
+                          if (message != null) {
+                            messageTextController.clear();
+                            await Future.delayed(
+                              Duration(seconds: 0),
+                              () => setMessageSerialToLast(),
+                            );
+                            await _firestore.collection('messages').add({
+                              'serialNumber': ++messageSerial,
+                              'text': message,
+                              'sender': loggedInUser.email,
+                            });
+                            message = null;
+                          }
                         },
                       ),
                     ),
@@ -173,7 +187,10 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore
+          .collection('messages')
+          .orderBy('serialNumber', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -188,7 +205,6 @@ class MessagesStream extends StatelessWidget {
         for (var message in messages) {
           final messageText = message.get('text');
           final messageSender = message.get('sender');
-
           final messageWidget = MessageBubble(
             screenHeight: screenHeight,
             messageText: messageText,
@@ -263,6 +279,7 @@ class MessagesStream extends StatelessWidget {
                 ),
                 Flexible(
                   child: ListView(
+                    reverse: true,
                     children: messageWidgets,
                   ),
                 ),
