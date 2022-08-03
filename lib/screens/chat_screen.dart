@@ -230,7 +230,7 @@ class MessagesStream extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          'Tanya Verma',
+                          'Anonymous Grp',
                           style: TextStyle(
                               color: kDarkBrown,
                               fontSize: screenHeight * 0.026,
