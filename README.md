@@ -33,3 +33,11 @@ Download APK from releases section
 - modal_progress_hud
 - font_awesome_flutter
 - cupertino_icons
+
+## My takeaways and learnings
+
+I learned about the concept of polling, which is heavily used while developing real-world mobile and web applications.
+Polling is implemented using streams, and by subscribing to these streams, the client application gets notified of the
+new data as soon as it comes to an API or a database. I used this to display the messages as soon as they were sent from
+the client and stored in the Firebase Firestore database. This helped me integrate real-time messaging into the app.
+Furthermore, I learned about Backend-as-a-Service (BaaS) and Google Cloud Platform's BaaS offering named Firebase.
