@@ -21,7 +21,7 @@ Download APK from releases section
 - Firebase Firestore
 - Firebase Authentication
 
-## Flutter Packages Used
+## Flutter Packages/dependencies
 
 - firebase_core
 - firebase_auth
