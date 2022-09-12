@@ -5,6 +5,10 @@
 <b>Getting bored? Worry not! Here's FirstChat!</b>
 
 A beautiful messaging app where you can interact with anonymous people in an anonymous group while being anonymous ;)
+If you are getting bored and want to talk to strangers without revealing your identity, you can register on the app
+where you can chat in an anonymous group. The app is written in Flutter, a hybrid mobile app framework, and uses
+Firebase Authentication and Firestore services for user authentication and messaging over the internet. The app has a
+beautiful UI that promotes user interaction and provides a good user experience.
 
 ## Preview
 
