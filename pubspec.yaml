@@ -17,6 +17,7 @@ dependencies:
   firebase_core: ^1.15.0
   modal_progress_hud: ^0.1.3
   font_awesome_flutter: ^10.1.0
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
