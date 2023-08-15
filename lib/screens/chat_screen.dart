@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final _firestore = FirebaseFirestore.instance;
-User loggedInUser;
+User? loggedInUser;
 int messageSerial = 0;
 
 class ChatScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
-  String message;
+  String? message;
 
   final messageTextController = TextEditingController();
 
@@ -36,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
-        print(loggedInUser.email);
+        print(loggedInUser!.email);
       }
     } catch (e) {
       print(e);
@@ -161,7 +161,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             await _firestore.collection('messages').add({
                               'serialNumber': ++messageSerial,
                               'text': message,
-                              'sender': loggedInUser.email,
+                              'sender': loggedInUser!.email,
                             });
                             message = null;
                           }
@@ -200,7 +200,7 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.docs;
+        final messages = snapshot.data!.docs;
         List<Widget> messageWidgets = [];
         for (var message in messages) {
           final messageText = message.get('text');
@@ -209,7 +209,7 @@ class MessagesStream extends StatelessWidget {
             screenHeight: screenHeight,
             messageText: messageText,
             messageSender: messageSender,
-            isMe: messageSender == loggedInUser.email,
+            isMe: messageSender == loggedInUser!.email,
           );
           messageWidgets.add(messageWidget);
         }
@@ -294,10 +294,10 @@ class MessagesStream extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({
-    @required this.screenHeight,
-    @required this.messageText,
-    @required this.messageSender,
-    @required this.isMe,
+    required this.screenHeight,
+    required this.messageText,
+    required this.messageSender,
+    required this.isMe,
   });
 
   final double screenHeight;

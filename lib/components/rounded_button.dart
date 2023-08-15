@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class RoundedButton extends StatelessWidget {
   final Color color;
   final String text;
-  final Color textColor;
-  final Function onPressed;
+  final Color? textColor;
+  final Function()? onPressed;
   final bool bordered;
   final Color shadowColor;
-  final bool topLeftSharpCorner;
-  final bool bottomRightSharpCorner;
+  final bool? topLeftSharpCorner;
+  final bool? bottomRightSharpCorner;
 
   RoundedButton(
       {this.bordered = false,
       this.topLeftSharpCorner,
       this.bottomRightSharpCorner,
       this.shadowColor = Colors.transparent,
-      @required this.color,
-      @required this.text,
-      @required this.textColor,
-      @required this.onPressed});
+      required this.color,
+      required this.text,
+      required this.textColor,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

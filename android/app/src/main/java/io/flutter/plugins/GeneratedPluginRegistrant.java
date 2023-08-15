@@ -35,5 +35,10 @@ public final class GeneratedPluginRegistrant {
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin fluttertoast, io.github.ponnamkarthik.toast.fluttertoast.FlutterToastPlugin", e);
     }
+    try {
+      flutterEngine.getPlugins().add(new boi.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin modal_progress_hud_nsn, boi.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin", e);
+    }
   }
 }

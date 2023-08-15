@@ -8,7 +8,7 @@ import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'RegistrationScreen';
@@ -18,9 +18,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  String email;
-  String password;
-  String name;
+  String? email;
+  String? password;
+  String? name;
   bool showSpinner = false;
   bool hiddenPassword = true;
   List<TextInputType> emailTextInputTypes = [
@@ -150,8 +150,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         try {
                           final newUser =
                               await _auth.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password,
+                            email: email!,
+                            password: password!,
                           );
                           if (newUser != null) {
                             Navigator.pushNamed(context, ChatScreen.id);

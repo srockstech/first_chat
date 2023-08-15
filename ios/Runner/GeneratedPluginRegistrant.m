@@ -30,6 +30,12 @@
 @import fluttertoast;
 #endif
 
+#if __has_include(<modal_progress_hud_nsn/ModalProgressHudNsnPlugin.h>)
+#import <modal_progress_hud_nsn/ModalProgressHudNsnPlugin.h>
+#else
+@import modal_progress_hud_nsn;
+#endif
+
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
@@ -37,6 +43,7 @@
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
+  [ModalProgressHudNsnPlugin registerWithRegistrar:[registry registrarForPlugin:@"ModalProgressHudNsnPlugin"]];
 }
 
 @end
