@@ -1,14 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash_chat/components/circular_icon_button.dart';
-import 'package:flash_chat/components/quote_bubble_text_field.dart';
-import 'package:flash_chat/components/rounded_button.dart';
-import 'package:flash_chat/constants.dart';
-import 'package:flash_chat/design/custom_box_decoration.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:first_chat/components/circular_icon_button.dart';
+import 'package:first_chat/components/quote_bubble_text_field.dart';
+import 'package:first_chat/components/rounded_button.dart';
+import 'package:first_chat/constants.dart';
+import 'package:first_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
+
+import '../services/firebase_google_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'LoginScreen';
@@ -165,7 +168,32 @@ class _LoginScreenState extends State<LoginScreen> {
                         CircularIconButton(
                           screenHeight: screenHeight,
                           icon: Image.asset('images/google_logo.png'),
-                          onPressed: () {},
+                          onPressed: () async {
+                            setState(() {
+                              showSpinner = true;
+                            });
+                            final provider = Provider.of<FirebaseGoogleAuth>(
+                                context,
+                                listen: false);
+                            bool loggedin = await provider.signIn();
+                            if (loggedin) {
+                              int flag =
+                                  1; //So that it listens only once for one call of this function
+                              _auth.authStateChanges().listen((user) {
+                                if (user != null && flag == 1) {
+                                  Navigator.pushNamed(context, ChatScreen.id);
+                                  flag = 0;
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                }
+                              });
+                            } else {
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+                          },
                         ),
                         CircularIconButton(
                           screenHeight: screenHeight,

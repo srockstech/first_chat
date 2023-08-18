@@ -1,10 +1,16 @@
-import 'package:flash_chat/components/circular_icon_button.dart';
-import 'package:flash_chat/components/rounded_button.dart';
-import 'package:flash_chat/constants.dart';
-import 'package:flash_chat/design/custom_box_decoration.dart';
-import 'package:flash_chat/screens/login_screen.dart';
-import 'package:flash_chat/screens/registration_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_chat/components/circular_icon_button.dart';
+import 'package:first_chat/components/rounded_button.dart';
+import 'package:first_chat/constants.dart';
+import 'package:first_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/screens/login_screen.dart';
+import 'package:first_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
+
+import '../services/firebase_google_auth.dart';
+import 'chat_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'WelcomeScreen';
@@ -15,8 +21,10 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   AnimationController? controller;
   Animation? animation;
+  bool showSpinner = false;
 
   @override
   void initState() {
@@ -48,116 +56,151 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: kPink, //animation.value
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            flex: 8,
-            child: Container(
-              color: kPink, //animation.value
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Hero(
-                    tag: 'logo',
-                    child: Container(
-                      child: Image.asset('images/logo_4.png'),
-                      height: screenHeight * 0.1,
+      body: ModalProgressHUD(
+        opacity: 0.4,
+        progressIndicator: RefreshProgressIndicator(
+          color: Colors.white,
+          strokeWidth: 3,
+          backgroundColor: kLightBrown,
+        ),
+        color: Colors.black,
+        inAsyncCall: showSpinner,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              flex: 8,
+              child: Container(
+                color: kPink, //animation.value
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Hero(
+                      tag: 'logo',
+                      child: Container(
+                        child: Image.asset('images/logo_4.png'),
+                        height: screenHeight * 0.1,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'first',
-                        style: TextStyle(
-                          fontSize: screenHeight * 0.08,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'first',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.08,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      Text(
-                        'chat',
-                        style: TextStyle(
-                          fontSize: screenHeight * 0.08,
-                          fontWeight: FontWeight.w900,
-                          color: kDarkBrown,
+                        Text(
+                          'chat',
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.08,
+                            fontWeight: FontWeight.w900,
+                            color: kDarkBrown,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Container(
-              decoration:
-                  CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
-              padding: EdgeInsets.only(
-                  left: screenHeight * 0.06, right: screenHeight * 0.06),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: screenHeight * 0.04,
-                  ),
-                  RoundedButton(
-                      topLeftSharpCorner: true,
-                      color: kLightBrown,
-                      text: 'Get Started',
-                      shadowColor: kLightBrownShadow,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.pushNamed(context, RegistrationScreen.id);
-                      }),
-                  SizedBox(
-                    height: screenHeight * 0.03,
-                  ),
-                  RoundedButton(
-                      topLeftSharpCorner: true,
-                      bordered: true,
-                      color: kBlack,
-                      text: 'Already a member? Login',
-                      textColor: kBlack,
-                      onPressed: () {
-                        Navigator.pushNamed(context, LoginScreen.id);
-                      }),
-                  SizedBox(
-                    height: screenHeight * 0.025,
-                  ),
-                  SizedBox(
-                    height: screenHeight * 0.012,
-                    width: screenHeight * 0.4,
-                    child: Divider(
-                      height: 0,
-                      color: Colors.grey,
-                      thickness: screenHeight * 0.001,
+            Expanded(
+              flex: 4,
+              child: Container(
+                decoration:
+                    CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
+                padding: EdgeInsets.only(
+                    left: screenHeight * 0.06, right: screenHeight * 0.06),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: screenHeight * 0.04,
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularIconButton(
-                        screenHeight: screenHeight,
-                        icon: Image.asset('images/google_logo.png'),
-                        onPressed: () {},
+                    RoundedButton(
+                        topLeftSharpCorner: true,
+                        color: kLightBrown,
+                        text: 'Get Started',
+                        shadowColor: kLightBrownShadow,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          Navigator.pushNamed(context, RegistrationScreen.id);
+                        }),
+                    SizedBox(
+                      height: screenHeight * 0.03,
+                    ),
+                    RoundedButton(
+                        topLeftSharpCorner: true,
+                        bordered: true,
+                        color: kBlack,
+                        text: 'Already a member? Login',
+                        textColor: kBlack,
+                        onPressed: () {
+                          Navigator.pushNamed(context, LoginScreen.id);
+                        }),
+                    SizedBox(
+                      height: screenHeight * 0.025,
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.012,
+                      width: screenHeight * 0.4,
+                      child: Divider(
+                        height: 0,
+                        color: Colors.grey,
+                        thickness: screenHeight * 0.001,
                       ),
-                      CircularIconButton(
-                        screenHeight: screenHeight,
-                        icon: Image.asset('images/facebook_logo.png'),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularIconButton(
+                          screenHeight: screenHeight,
+                          icon: Image.asset('images/google_logo.png'),
+                          onPressed: () async {
+                            setState(() {
+                              showSpinner = true;
+                            });
+                            final provider = Provider.of<FirebaseGoogleAuth>(
+                                context,
+                                listen: false);
+                            bool loggedin = await provider.signIn();
+                            if (loggedin) {
+                              int flag =
+                                  1; //So that it listens only once for one call of this function
+                              _auth.authStateChanges().listen((user) {
+                                if (user != null && flag == 1) {
+                                  Navigator.pushNamed(context, ChatScreen.id);
+                                  flag = 0;
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                }
+                              });
+                            } else {
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+                          },
+                        ),
+                        CircularIconButton(
+                          screenHeight: screenHeight,
+                          icon: Image.asset('images/facebook_logo.png'),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

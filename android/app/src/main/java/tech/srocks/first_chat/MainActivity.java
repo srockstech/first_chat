@@ -1,4 +1,4 @@
-package co.appbrewery.flash_chat;
+package tech.srocks.first_chat;
 
 import io.flutter.embedding.android.FlutterActivity;
 

@@ -36,6 +36,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin fluttertoast, io.github.ponnamkarthik.toast.fluttertoast.FlutterToastPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new io.flutter.plugins.googlesignin.GoogleSignInPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin google_sign_in_android, io.flutter.plugins.googlesignin.GoogleSignInPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new boi.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin modal_progress_hud_nsn, boi.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin", e);

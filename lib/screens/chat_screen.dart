@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flash_chat/components/circular_icon_button.dart';
-import 'package:flash_chat/components/quote_bubble_text_field.dart';
-import 'package:flash_chat/components/rounded_button.dart';
-import 'package:flash_chat/constants.dart';
-import 'package:flash_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/components/circular_icon_button.dart';
+import 'package:first_chat/components/quote_bubble_text_field.dart';
+import 'package:first_chat/components/rounded_button.dart';
+import 'package:first_chat/constants.dart';
+import 'package:first_chat/design/custom_box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

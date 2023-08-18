@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:525030120892:android:77732e9248290aa6295fb9",
+        "mobilesdk_app_id": "1:525030120892:android:4a002818f691a638295fb9",
         "android_client_info": {
-          "package_name": "tech.srocks.flash_chat"
+          "package_name": "tech.srocks.firstchat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "525030120892-gdjk518c6tj2ngftglajh8dk9hjcjcff.apps.googleusercontent.com",
+          "client_id": "525030120892-83e4jbuh4jslpdqsqlfm93qjt04gck2r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +27,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "525030120892-gdjk518c6tj2ngftglajh8dk9hjcjcff.apps.googleusercontent.com",
+              "client_id": "525030120892-83e4jbuh4jslpdqsqlfm93qjt04gck2r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

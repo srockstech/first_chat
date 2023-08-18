@@ -1,4 +1,4 @@
-name: flash_chat
+name: first_chat
 description: A new Flutter application.
 
 version: 1.0.0+1
@@ -18,10 +18,21 @@ dependencies:
   modal_progress_hud_nsn: ^0.4.0
   font_awesome_flutter: ^10.1.0
   fluttertoast: ^8.0.9
+  google_sign_in: ^6.1.4
+  provider: ^6.0.5
+  rename: ^2.1.1
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "images/firstchat_logo.png"
 
 flutter:
   uses-material-design: true
