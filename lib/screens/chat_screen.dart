@@ -5,6 +5,7 @@ import 'package:first_chat/components/quote_bubble_text_field.dart';
 import 'package:first_chat/components/rounded_button.dart';
 import 'package:first_chat/constants.dart';
 import 'package:first_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -84,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         textColor: kCream,
                         onPressed: () {
                           _auth.signOut();
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, WelcomeScreen.id);
                         },
                       ),
                       RoundedButton(
