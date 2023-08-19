@@ -6,6 +6,7 @@ import 'package:first_chat/components/rounded_button.dart';
 import 'package:first_chat/constants.dart';
 import 'package:first_chat/design/custom_box_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -58,121 +59,141 @@ class _ChatScreenState extends State<ChatScreen> {
       () => setMessageSerialToLast(),
     );
     final screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: kDarkBrown,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  top: screenHeight * 0.01, bottom: screenHeight * 0.01),
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RoundedButton(
-                      color: Colors.transparent,
-                      text: 'Back',
-                      textColor: kCream,
-                      onPressed: () {
-                        _auth.signOut();
-                        Navigator.pop(context);
-                      },
-                    ),
-                    RoundedButton(
-                      color: Colors.transparent,
-                      text: 'Search',
-                      textColor: kCream,
-                      onPressed: () {
-                        _auth.signOut();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            MessagesStream(screenHeight: screenHeight),
-            Container(
-              decoration: kMessageContainerDecoration,
-              child: Padding(
-                padding: EdgeInsets.all(screenHeight * 0.01),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: QuoteBubbleTextField(
-                          controller: messageTextController,
-                          textColor: kLightBrown,
-                          cursorColor: kLightBrown,
-                          haveSharpCorner: false,
-                          maxLines: 5,
-                          minLines: 1,
-                          keyboardType: TextInputType.multiline,
-                          enabledBorderColor: Colors.transparent,
-                          focusedBorderColor: Colors.transparent,
-                          fillColor: kCream,
-                          focusColor: Colors.white,
-                          prefixIcon: IconButton(
-                            icon: Icon(
-                              FontAwesomeIcons.faceSmileBeam,
-                              color: kLightBrown,
-                              size: 24,
-                            ),
-                            splashRadius: screenHeight * 0.03,
-                            onPressed: () {},
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              FontAwesomeIcons.paperclip,
-                              color: Colors.grey[600],
-                              size: 20,
-                            ),
-                            splashRadius: screenHeight * 0.03,
-                            onPressed: () {},
-                          ),
-                          screenHeight: screenHeight,
-                          hintText: 'Type your message...',
-                          hintTextColor: Colors.grey[600],
-                          onChanged: (value) {
-                            message = value;
-                          }),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: screenHeight * 0.01, top: screenHeight * 0.004),
-                      height: screenHeight * 0.06,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: kLightBrown),
-                      child: IconButton(
-                        padding: EdgeInsets.only(right: screenHeight * 0.003),
-                        splashRadius: 1,
-                        icon: Icon(FontAwesomeIcons.solidPaperPlane,
-                            color: Colors.white, size: 20),
-                        onPressed: () async {
-                          if (message != null) {
-                            messageTextController.clear();
-                            await Future.delayed(
-                              Duration(seconds: 0),
-                              () => setMessageSerialToLast(),
-                            );
-                            await _firestore.collection('messages').add({
-                              'serialNumber': ++messageSerial,
-                              'text': message,
-                              'sender': loggedInUser!.email,
-                            });
-                            message = null;
-                          }
+    return WillPopScope(
+      onWillPop: () async {
+        await SystemNavigator.pop();
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: kDarkBrown,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.01, bottom: screenHeight * 0.01),
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RoundedButton(
+                        color: Colors.transparent,
+                        text: 'Logout',
+                        textColor: kCream,
+                        onPressed: () {
+                          _auth.signOut();
+                          Navigator.pop(context);
                         },
                       ),
-                    ),
-                  ],
+                      RoundedButton(
+                        color: Colors.transparent,
+                        text: 'Search',
+                        textColor: kCream,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              MessagesStream(screenHeight: screenHeight),
+              Container(
+                decoration: kMessageContainerDecoration,
+                child: Padding(
+                  padding: EdgeInsets.all(screenHeight * 0.01),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: QuoteBubbleTextField(
+                            controller: messageTextController,
+                            textColor: kLightBrown,
+                            cursorColor: kLightBrown,
+                            haveSharpCorner: false,
+                            maxLines: 5,
+                            minLines: 1,
+                            keyboardType: TextInputType.multiline,
+                            enabledBorderColor: Colors.transparent,
+                            focusedBorderColor: Colors.transparent,
+                            fillColor: kCream,
+                            focusColor: Colors.white,
+                            prefixIcon: IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.faceSmileBeam,
+                                color: kLightBrown,
+                                size: 24,
+                              ),
+                              splashRadius: screenHeight * 0.03,
+                              onPressed: () {},
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.paperclip,
+                                color: Colors.grey[600],
+                                size: 20,
+                              ),
+                              splashRadius: screenHeight * 0.03,
+                              onPressed: () {},
+                            ),
+                            screenHeight: screenHeight,
+                            hintText: 'Type your message...',
+                            hintTextColor: Colors.grey[600],
+                            onChanged: (value) {
+                              message = value;
+                            }),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: screenHeight * 0.01,
+                            top: screenHeight * 0.004),
+                        height: screenHeight * 0.06,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: kLightBrown),
+                        child: IconButton(
+                          padding: EdgeInsets.only(right: screenHeight * 0.003),
+                          splashRadius: 1,
+                          icon: Icon(FontAwesomeIcons.solidPaperPlane,
+                              color: Colors.white, size: 20),
+                          onPressed: () async {
+                            String messageToBeSent = '';
+                            if (message![0] == ' ') {
+                              var i = 0;
+                              while (i < message!.length) {
+                                if (message![i] != ' ') {
+                                  break;
+                                }
+                                i++;
+                              }
+                              while (i < message!.length) {
+                                messageToBeSent += message![i];
+                                i++;
+                              }
+                            } else {
+                              messageToBeSent = message!;
+                            }
+                            if (messageToBeSent != '') {
+                              messageTextController.clear();
+                              await Future.delayed(
+                                Duration(seconds: 0),
+                                () => setMessageSerialToLast(),
+                              );
+                              await _firestore.collection('messages').add({
+                                'serialNumber': ++messageSerial,
+                                'text': messageToBeSent,
+                                'sender': loggedInUser!.email,
+                              });
+                              message = null;
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -59,7 +59,8 @@ class _FlashChatState extends State<FlashChat> {
             tertiary: Colors.white,
           ),
         ),
-        initialRoute: WelcomeScreen.id,
+        initialRoute:
+            (_auth.currentUser != null) ? ChatScreen.id : WelcomeScreen.id,
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),

@@ -35,7 +35,8 @@ class FirebaseGoogleAuth extends ChangeNotifier {
 
       //signing the user in using the credential fetched
       await _auth.signInWithCredential(credential);
-      notifyListeners();
+      // notifyListeners();
+      return true;
     } catch (e) {
       print(e.toString());
     }
