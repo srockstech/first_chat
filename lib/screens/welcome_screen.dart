@@ -8,8 +8,8 @@ import 'package:first_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:provider/provider.dart';
 
+import '../services/firebase_facebook_auth.dart';
 import '../services/firebase_google_auth.dart';
 import 'chat_screen.dart';
 
@@ -171,9 +171,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               setState(() {
                                 showSpinner = true;
                               });
-                              final provider = Provider.of<FirebaseGoogleAuth>(
-                                  context,
-                                  listen: false);
+                              final provider = FirebaseGoogleAuth();
                               bool loggedin = await provider.signIn();
                               if (loggedin) {
                                 int flag =
@@ -197,7 +195,30 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           CircularIconButton(
                             screenHeight: screenHeight,
                             icon: Image.asset('images/facebook_logo.png'),
-                            onPressed: () {},
+                            onPressed: () async {
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              final provider = FirebaseFacebookAuth();
+                              bool loggedin = await provider.signIn();
+                              if (loggedin) {
+                                int flag =
+                                    1; //So that it listens only once for one call of this function
+                                _auth.authStateChanges().listen((user) {
+                                  if (user != null && flag == 1) {
+                                    Navigator.pushNamed(context, ChatScreen.id);
+                                    flag = 0;
+                                    setState(() {
+                                      showSpinner = false;
+                                    });
+                                  }
+                                });
+                              } else {
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              }
+                            },
                           ),
                         ],
                       ),

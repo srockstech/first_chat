@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class FirebaseGoogleAuth extends ChangeNotifier {
+class FirebaseGoogleAuth {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   final googleSignIn =
@@ -27,7 +26,7 @@ class FirebaseGoogleAuth extends ChangeNotifier {
       //for fetching credential, accessToken and idToken are used. They are accessed using 'authentication' getter from the 'GoogleSignInAuthentication' class of the 'google_sign_in' file.
       final googleAuth = await googleUser.authentication;
 
-      //fetching credential using the accessToken and idToken
+      //creating credential using the accessToken and idToken
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -43,8 +42,9 @@ class FirebaseGoogleAuth extends ChangeNotifier {
     return true;
   }
 
-  Future logout() async {
+  Future signOut() async {
+    await googleSignIn.signOut();
     await googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
+    await _auth.signOut();
   }
 }

@@ -6,6 +6,8 @@ import 'package:first_chat/components/rounded_button.dart';
 import 'package:first_chat/constants.dart';
 import 'package:first_chat/design/custom_box_decoration.dart';
 import 'package:first_chat/screens/welcome_screen.dart';
+import 'package:first_chat/services/firebase_facebook_auth.dart';
+import 'package:first_chat/services/firebase_google_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -83,8 +85,20 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: Colors.transparent,
                         text: 'Logout',
                         textColor: kCream,
-                        onPressed: () {
-                          _auth.signOut();
+                        onPressed: () async {
+                          var signInMethod =
+                              await _auth.fetchSignInMethodsForEmail(
+                                  'sarvagya1116@gmail.com');
+                          switch (signInMethod[0]) {
+                            case 'facebook.com':
+                              FirebaseFacebookAuth().signOut();
+                              break;
+                            case 'google.com':
+                              FirebaseGoogleAuth().signOut();
+                              break;
+                            default:
+                              await _auth.signOut();
+                          }
                           Navigator.pushNamed(context, WelcomeScreen.id);
                         },
                       ),
