@@ -22,14 +22,20 @@ Download APK from releases section
 
 - Dart-lang
 - Flutter
-- Firebase Firestore
-- Firebase Authentication
+- Firebase Firestore Database
+- Firebase Authentication (Email/Google/Facebook)
+- Firebase App Check
+- Provider State Management
 
 ## Flutter Packages/dependencies
 
 - firebase_core
 - firebase_auth
 - cloud_firestore
+- firebase_app_check
+- google_sign_in
+- flutter_facebook_auth
+- provider
 - modal_progress_hud
 - font_awesome_flutter
 - cupertino_icons
