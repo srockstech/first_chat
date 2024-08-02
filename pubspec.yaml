@@ -23,6 +23,7 @@ dependencies:
   rename: ^2.1.1
   flutter_facebook_auth: ^6.0.1
   firebase_app_check: ^0.1.5+2
+  google_fonts: ^6.2.1
 
 
 

@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     left: screenHeight * 0.06,
                     right: screenHeight * 0.06,
                     top: screenHeight * 0.14,
-                    bottom: screenHeight * 0.12),
+                    bottom: screenHeight * 0.02),
                 decoration: CustomBoxDecoration.bottomLeftRoundCornerShadow(
                     screenHeight),
                 child: Column(
@@ -70,9 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     QuoteBubbleTextField(
                       screenHeight: screenHeight,
                       keyboardType: TextInputType.emailAddress,
-                      prefixIcon: Icon(
-                        Icons.email_rounded,
-                        color: kBlack,
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(left: screenHeight * 0.012),
+                        child: Icon(
+                          Icons.email_rounded,
+                          color: kBlack,
+                        ),
                       ),
                       label: 'Email',
                       onChanged: (value) {
@@ -85,11 +88,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     QuoteBubbleTextField(
                       screenHeight: screenHeight,
                       obscureText: hiddenPassword,
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        color: kBlack,
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(left: screenHeight * 0.012),
+                        child: Icon(
+                          Icons.lock,
+                          color: kBlack,
+                        ),
                       ),
                       suffixIcon: IconButton(
+                        padding: EdgeInsets.only(right: screenHeight * 0.012),
                         onPressed: () {
                           if (hiddenPassword == true) {
                             setState(() {
@@ -142,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                         } catch (e) {
                           await Fluttertoast.showToast(
+                            timeInSecForIosWeb: 5,
                               msg: e.toString(),
                               toastLength: Toast.LENGTH_LONG);
                           setState(() {
@@ -154,12 +162,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: screenHeight * 0.025,
                     ),
                     SizedBox(
-                      height: screenHeight * 0.012,
+                      height: screenHeight * 0.032,
                       width: screenHeight * 0.4,
-                      child: Divider(
-                        height: 0,
-                        color: Colors.grey,
-                        thickness: screenHeight * 0.001,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            color: Colors.grey[300],
+                            height: 1.5,
+                            width: screenHeight * 0.12,
+                          ),
+                          Text('   OR   ',
+                              style: TextStyle(
+                                color: kBlack,
+                                fontSize: screenHeight * 0.018,
+                                fontWeight: FontWeight.w600,
+                              )),
+                          Container(
+                            color: Colors.grey[300],
+                            height: 1.5,
+                            width: screenHeight * 0.12,
+                          ),
+                        ],
                       ),
                     ),
                     Row(
@@ -195,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CircularIconButton(
                           screenHeight: screenHeight,
-                          icon: Image.asset('images/facebook_logo.png'),
+                          icon: Image.asset('images/facebook_logo.png', height: screenHeight * 0.03,),
                           onPressed: () async {
                             setState(() {
                               showSpinner = true;

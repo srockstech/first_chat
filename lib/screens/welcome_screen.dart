@@ -54,6 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
+
     final screenHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async {
@@ -94,17 +95,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         children: [
                           Text(
                             'first',
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               fontSize: screenHeight * 0.08,
-                              fontWeight: FontWeight.w900,
                               color: Colors.white,
                             ),
                           ),
                           Text(
                             'chat',
-                            style: TextStyle(
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               fontSize: screenHeight * 0.08,
-                              fontWeight: FontWeight.w900,
                               color: kDarkBrown,
                             ),
                           ),
@@ -115,7 +114,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: Container(
                   decoration: CustomBoxDecoration.topRightRoundCornerShadow(
                       screenHeight),
@@ -150,15 +149,32 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             Navigator.pushNamed(context, LoginScreen.id);
                           }),
                       SizedBox(
-                        height: screenHeight * 0.025,
+                        height: screenHeight * 0.02,
                       ),
                       SizedBox(
-                        height: screenHeight * 0.012,
+                        height: screenHeight * 0.04,
                         width: screenHeight * 0.4,
-                        child: Divider(
-                          height: 0,
-                          color: Colors.grey,
-                          thickness: screenHeight * 0.001,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              color: Colors.grey[300],
+                              height: 1.5,
+                              width: screenHeight * 0.12,
+                            ),
+                            Text('   OR   ',
+                                style: TextStyle(
+                                  color: kBlack,
+                                  fontSize: screenHeight * 0.018,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            Container(
+                              color: Colors.grey[300],
+                              height: 1.5,
+                              width: screenHeight * 0.12,
+                            ),
+                          ],
                         ),
                       ),
                       Row(
@@ -194,7 +210,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ),
                           CircularIconButton(
                             screenHeight: screenHeight,
-                            icon: Image.asset('images/facebook_logo.png'),
+                            icon: Image.asset('images/facebook_logo.png', height: screenHeight * 0.03,),
                             onPressed: () async {
                               setState(() {
                                 showSpinner = true;

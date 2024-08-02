@@ -7,15 +7,18 @@ import 'package:first_chat/screens/registration_screen.dart';
 import 'package:first_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'constants.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await FirebaseAppCheck.instance.activate(
       webRecaptchaSiteKey: 'recaptcha-v3-site-key',
       androidProvider: AndroidProvider.playIntegrity,
@@ -43,13 +46,11 @@ class _FlashChatState extends State<FlashChat> {
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             splashFactory: InkRipple.splashFactory,
-            primary: kBlack,
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: TextButton.styleFrom(
             splashFactory: InkRipple.splashFactory,
-            primary: kBlack,
           ),
         ),
         splashFactory: InkRipple.splashFactory,
@@ -58,6 +59,14 @@ class _FlashChatState extends State<FlashChat> {
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: kBlack,
           tertiary: Colors.white,
+          primary: kLightBrownShadow,
+        ),
+        textTheme: GoogleFonts.robotoTextTheme(
+          Theme.of(context).textTheme.copyWith(
+            titleLarge: TextStyle(
+              fontWeight: FontWeight.w900,
+            ),
+              ),
         ),
       ),
       initialRoute:

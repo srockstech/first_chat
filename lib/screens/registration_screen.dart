@@ -53,7 +53,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   left: screenHeight * 0.06,
                   right: screenHeight * 0.06,
                   top: screenHeight * 0.1,
-                  bottom: screenHeight * 0.08),
+                  bottom: screenHeight * 0.02),
               decoration:
                   CustomBoxDecoration.bottomLeftRoundCornerShadow(screenHeight),
               child: Column(
@@ -73,9 +73,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   QuoteBubbleTextField(
                     screenHeight: screenHeight,
                     keyboardType: TextInputType.name,
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: kBlack,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: screenHeight * 0.012),
+                      child: Icon(
+                        Icons.person,
+                        color: kBlack,
+                      ),
                     ),
                     label: 'Name',
                     onChanged: (value) {
@@ -88,9 +91,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   QuoteBubbleTextField(
                     screenHeight: screenHeight,
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icon(
-                      Icons.email_rounded,
-                      color: kBlack,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: screenHeight * 0.012),
+                      child: Icon(
+                        Icons.email_rounded,
+                        color: kBlack,
+                      ),
                     ),
                     label: 'Email',
                     onChanged: (value) {
@@ -103,11 +109,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   QuoteBubbleTextField(
                     screenHeight: screenHeight,
                     obscureText: hiddenPassword,
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: kBlack,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: screenHeight * 0.012),
+                      child: Icon(
+                        Icons.lock,
+                        color: kBlack,
+                      ),
                     ),
                     suffixIcon: IconButton(
+                      padding: EdgeInsets.only(right: screenHeight * 0.012),
                       onPressed: () {
                         if (hiddenPassword == true) {
                           setState(() {
@@ -174,12 +184,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: screenHeight * 0.025,
                   ),
                   SizedBox(
-                    height: screenHeight * 0.012,
+                    height: screenHeight * 0.032,
                     width: screenHeight * 0.4,
-                    child: Divider(
-                      height: 0,
-                      color: Colors.grey,
-                      thickness: screenHeight * 0.001,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          color: Colors.grey[300],
+                          height: 1.5,
+                          width: screenHeight * 0.12,
+                        ),
+                        Text('   OR   ',
+                            style: TextStyle(
+                              color: kBlack,
+                              fontSize: screenHeight * 0.018,
+                              fontWeight: FontWeight.w600,
+                            )),
+                        Container(
+                          color: Colors.grey[300],
+                          height: 1.5,
+                          width: screenHeight * 0.12,
+                        ),
+                      ],
                     ),
                   ),
                   Row(
@@ -215,7 +241,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       CircularIconButton(
                         screenHeight: screenHeight,
-                        icon: Image.asset('images/facebook_logo.png'),
+                        icon: Image.asset('images/facebook_logo.png', height: screenHeight * 0.03,),
                         onPressed: () async {
                           setState(() {
                             showSpinner = true;

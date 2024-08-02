@@ -41,5 +41,22 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>CLIENT_ID</key>
+	<string>525030120892-9ftqilhb91e6n2q7tinjajstdstogjap.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+    <array>
+    	<dict>
+    		<key>CFBundleTypeRole</key>
+    		<string>Editor</string>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+    			<string>com.googleusercontent.apps.525030120892-9ftqilhb91e6n2q7tinjajstdstogjap</string>
+    		</array>
+    	</dict>
+    </array>
 </dict>
 </plist>

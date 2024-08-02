@@ -24,10 +24,10 @@ class CustomBoxDecoration {
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black87,
-          offset: Offset(screenHeight * -0.028, screenHeight * 0.007),
-          spreadRadius: screenHeight * 0.007,
-          blurRadius: screenHeight * 0.03,
+          color: Colors.black45,
+          offset: Offset(-25, 3),
+          spreadRadius: 10,
+          blurRadius: 30,
         ),
       ],
       color: Colors.white,

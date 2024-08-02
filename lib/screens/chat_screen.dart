@@ -86,18 +86,22 @@ class _ChatScreenState extends State<ChatScreen> {
                         text: 'Logout',
                         textColor: kCream,
                         onPressed: () async {
-                          var signInMethod =
-                              await _auth.fetchSignInMethodsForEmail(
-                                  'sarvagya1116@gmail.com');
-                          switch (signInMethod[0]) {
-                            case 'facebook.com':
-                              FirebaseFacebookAuth().signOut();
-                              break;
-                            case 'google.com':
-                              FirebaseGoogleAuth().signOut();
-                              break;
-                            default:
-                              await _auth.signOut();
+                          try {
+                            var signInMethod =
+                            await _auth.fetchSignInMethodsForEmail(
+                                loggedInUser!.email!);
+                            switch (signInMethod[0]) {
+                              case 'facebook.com':
+                                FirebaseFacebookAuth().signOut();
+                                break;
+                              case 'google.com':
+                                FirebaseGoogleAuth().signOut();
+                                break;
+                              default:
+                                await _auth.signOut();
+                            }
+                          } catch (e) {
+                            print('Exception in fetchSignInMethods: $e');
                           }
                           Navigator.pushNamed(context, WelcomeScreen.id);
                         },
@@ -113,6 +117,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               MessagesStream(screenHeight: screenHeight),
+              SizedBox(
+                child: Divider(
+                  height: 0,
+                  thickness: 1,
+                  color: Colors.grey[300],
+                ),
+              ),
               Container(
                 decoration: kMessageContainerDecoration,
                 child: Padding(
@@ -171,23 +182,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           icon: Icon(FontAwesomeIcons.solidPaperPlane,
                               color: Colors.white, size: 20),
                           onPressed: () async {
-                            String messageToBeSent = '';
-                            if (message![0] == ' ') {
-                              var i = 0;
-                              while (i < message!.length) {
-                                if (message![i] != ' ') {
-                                  break;
-                                }
-                                i++;
-                              }
-                              while (i < message!.length) {
-                                messageToBeSent += message![i];
-                                i++;
-                              }
-                            } else {
-                              messageToBeSent = message!;
-                            }
-                            if (messageToBeSent != '') {
+                            message = message!.trim();
+                            if (message!.isNotEmpty) {
                               messageTextController.clear();
                               await Future.delayed(
                                 Duration(seconds: 0),
@@ -195,7 +191,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               );
                               await _firestore.collection('messages').add({
                                 'serialNumber': ++messageSerial,
-                                'text': messageToBeSent,
+                                'text': message,
                                 'sender': loggedInUser!.email,
                               });
                               message = null;
@@ -242,6 +238,7 @@ class MessagesStream extends StatelessWidget {
           final messageText = message.get('text');
           final messageSender = message.get('sender');
           final messageWidget = MessageBubble(
+            onPressed: () {},
             screenHeight: screenHeight,
             messageText: messageText,
             messageSender: messageSender,
@@ -250,76 +247,82 @@ class MessagesStream extends StatelessWidget {
           messageWidgets.add(messageWidget);
         }
         return Expanded(
-          child: Container(
-            decoration:
-                CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: screenHeight * 0.04,
-                      right: screenHeight * 0.04,
-                      top: screenHeight * 0.01,
-                      bottom: screenHeight * 0.003),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          'Anonymous Grp',
-                          style: TextStyle(
-                              color: kDarkBrown,
-                              fontSize: screenHeight * 0.026,
-                              fontWeight: FontWeight.bold),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              decoration:
+                  CustomBoxDecoration.topRightRoundCornerShadow(screenHeight),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: screenHeight * 0.04,
+                        right: screenHeight * 0.04,
+                        top: screenHeight * 0.01,
+                        bottom: screenHeight * 0.003),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'Anonymous Grp',
+                            style: TextStyle(
+                                color: kDarkBrown,
+                                fontSize: screenHeight * 0.023,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: screenHeight * 0.06,
-                      ),
-                      Row(
-                        children: [
-                          CircularIconButton(
-                            screenHeight: screenHeight,
-                            height: screenHeight * 0.045,
-                            width: screenHeight * 0.045,
-                            onPressed: () {},
-                            icon: Icon(
-                              FontAwesomeIcons.phone,
-                              color: kDarkBrown,
-                              size: screenHeight * 0.02,
+                        SizedBox(
+                          width: screenHeight * 0.06,
+                        ),
+                        Row(
+                          children: [
+                            CircularIconButton(
+                              screenHeight: screenHeight,
+                              height: screenHeight * 0.045,
+                              width: screenHeight * 0.045,
+                              onPressed: () {},
+                              icon: Icon(
+                                FontAwesomeIcons.phone,
+                                color: kDarkBrown,
+                                size: screenHeight * 0.02,
+                              ),
                             ),
-                          ),
-                          CircularIconButton(
-                            screenHeight: screenHeight,
-                            height: screenHeight * 0.045,
-                            width: screenHeight * 0.045,
-                            onPressed: () {},
-                            icon: Icon(
-                              FontAwesomeIcons.video,
-                              color: kDarkBrown,
-                              size: screenHeight * 0.02,
+                            CircularIconButton(
+                              screenHeight: screenHeight,
+                              height: screenHeight * 0.045,
+                              width: screenHeight * 0.045,
+                              onPressed: () {},
+                              icon: Icon(
+                                FontAwesomeIcons.video,
+                                color: kDarkBrown,
+                                size: screenHeight * 0.02,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.012,
-                  width: screenHeight * 0.4,
-                  child: Divider(
-                    height: 0,
-                    thickness: screenHeight * 0.0015,
+                  SizedBox(
+                    height: screenHeight * 0.012,
+                    width: screenHeight * 0.4,
+                    child: Divider(
+                      height: 0,
+                      thickness: 1,
+                      color: Colors.grey[300],
+                    ),
                   ),
-                ),
-                Flexible(
-                  child: ListView(
-                    reverse: true,
-                    children: messageWidgets,
+                  Flexible(
+                    child: ListView(
+                      reverse: true,
+                      children: messageWidgets,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -334,12 +337,14 @@ class MessageBubble extends StatelessWidget {
     required this.messageText,
     required this.messageSender,
     required this.isMe,
+    required this.onPressed,
   });
 
   final double screenHeight;
   final String messageText;
   final String messageSender;
   final bool isMe;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -355,13 +360,29 @@ class MessageBubble extends StatelessWidget {
           Flexible(flex: 2, child: SizedBox()),
           Flexible(
             flex: 10,
-            child: RoundedButton(
-                color: (isMe) ? kLightBrown : kCream,
-                text: '$messageText',
-                textColor: (isMe) ? Colors.white : Colors.grey[800],
-                bottomRightSharpCorner: (isMe) ? true : false,
-                topLeftSharpCorner: (isMe) ? false : true,
-                onPressed: () {}),
+            child: TextButton(
+            onPressed: onPressed,
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.all(screenHeight * 0.02),
+              backgroundColor: (isMe) ? kLightBrown : kCream,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(screenHeight * 0.04),
+                  topLeft: (isMe) ? Radius.circular(screenHeight * 0.04) : Radius.circular(0),
+                  bottomLeft: Radius.circular(screenHeight * 0.04),
+                  bottomRight: (isMe) ? Radius.circular(0) : Radius.circular(screenHeight * 0.04),
+                ),
+              ),
+            ),
+            child: Text(
+              '$messageText',
+              style: TextStyle(
+                fontSize: screenHeight * 0.02,
+                color: (isMe) ? Colors.white : Colors.grey[800],
+                letterSpacing: 0.5,
+              ),
+            ),
+          ),
           ),
         ],
       ),

@@ -96,6 +96,7 @@ class QuoteBubbleTextField extends StatelessWidget {
         ),
         style: TextStyle(
             color: textColor, fontWeight: FontWeight.bold, fontSize: fontSize),
+
       ),
     );
   }

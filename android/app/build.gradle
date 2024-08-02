@@ -73,6 +73,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
+    implementation("com.google.firebase:firebase-appcheck-debug")
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 }

@@ -30,7 +30,7 @@ class RoundedButton extends StatelessWidget {
           padding: EdgeInsets.all(screenHeight * 0.02),
           backgroundColor: color,
           shadowColor: shadowColor,
-          elevation: screenHeight * 0.01,
+          elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(screenHeight * 0.04),
