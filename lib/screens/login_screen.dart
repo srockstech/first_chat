@@ -3,7 +3,7 @@ import 'package:first_chat/components/circular_icon_button.dart';
 import 'package:first_chat/components/quote_bubble_text_field.dart';
 import 'package:first_chat/components/rounded_button.dart';
 import 'package:first_chat/constants.dart';
-import 'package:first_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/styles/custom_box_decoration.dart';
 import 'package:first_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +12,8 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../services/firebase_facebook_auth.dart';
 import '../services/firebase_google_auth.dart';
+import '../styles/custom_shadow.dart';
+import '../styles/custom_text_style.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'LoginScreen';
@@ -26,6 +28,29 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
   bool hiddenPassword = true;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // NavigatorState? _navigator;
+
+  // late PageController _pageController;
+  // double _dragStartX = 0.0;
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   _navigator = Navigator.of(context);
+  // }
+  //
+  // @override
+  // void initState() {
+  //   _pageController = PageController();
+  //   super.initState();
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   _pageController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: screenHeight * 0.05,
                     ),
                     QuoteBubbleTextField(
-                      screenHeight: screenHeight,
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(left: screenHeight * 0.012),
@@ -86,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: screenHeight * 0.019,
                     ),
                     QuoteBubbleTextField(
-                      screenHeight: screenHeight,
                       obscureText: hiddenPassword,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(left: screenHeight * 0.012),
@@ -131,19 +154,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     RoundedButton(
                       topLeftSharpCorner: true,
                       color: kLightBrown,
-                      shadowColor: kLightBrownShadow,
-                      text: 'Login',
-                      textColor: Colors.white,
+                      child: Text(
+                        'Logout',
+                        style: CustomTextStyle.secondaryTextStyle(context, screenHeight),
+                      ),
+                      shadow: CustomShadow.primaryCTAShadow(),
                       onPressed: () async {
                         setState(() {
                           showSpinner = true;
                         });
                         try {
-                          final user = await _auth.signInWithEmailAndPassword(
+                          await _auth.signInWithEmailAndPassword(
                               email: email!, password: password!);
-                          if (user != null) {
                             Navigator.pushNamed(context, ChatScreen.id);
-                          }
                           setState(() {
                             showSpinner = false;
                           });
@@ -175,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text('   OR   ',
                               style: TextStyle(
                                 color: kBlack,
-                                fontSize: screenHeight * 0.018,
+                                fontSize: screenHeight * 0.02,
                                 fontWeight: FontWeight.w600,
                               )),
                           Container(

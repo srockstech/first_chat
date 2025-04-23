@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:first_chat/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class QuoteBubbleTextField extends StatelessWidget {
   QuoteBubbleTextField({
-    @required this.screenHeight,
     @required this.onChanged,
     this.prefixIcon,
     this.suffixIcon,
@@ -22,11 +24,23 @@ class QuoteBubbleTextField extends StatelessWidget {
     this.maxLines = 1,
     this.minLines,
     this.keyboardType,
+    this.textInputAction,
     this.controller,
+    this.enabledBorderWidth,
+    this.focusedBorderWidth,
+    this.contentPadding,
+    this.hideKeyboardOnTapOutside = true,
+    this.focusNode,
+    this.shadow = const [
+      BoxShadow(
+        color: Colors.transparent,
+        offset: Offset(0, 3),
+        blurRadius: 6,
+      ),
+    ],
   });
 
   final Function(String)? onChanged;
-  final double? screenHeight;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? label;
@@ -45,58 +59,98 @@ class QuoteBubbleTextField extends StatelessWidget {
   final int? minLines;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final double? enabledBorderWidth;
+  final double? focusedBorderWidth;
+  final EdgeInsets? contentPadding;
+  final List<BoxShadow> shadow;
+  final bool hideKeyboardOnTapOutside;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Theme(
       data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText!,
-        keyboardType: keyboardType,
-        maxLines: maxLines,
-        minLines: minLines,
-        onChanged: onChanged,
-        cursorColor: cursorColor,
-        decoration: InputDecoration(
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          labelText: label,
-          labelStyle: TextStyle(color: kBlack, fontWeight: FontWeight.bold),
-          contentPadding: EdgeInsets.all(screenHeight! * 0.02),
-          filled: true,
-          fillColor: fillColor,
-          focusColor: focusColor,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: enabledBorderColor, width: screenHeight! * 0.0015),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(screenHeight! * 0.04),
-              bottomLeft: Radius.circular(screenHeight! * 0.04),
-              topRight: Radius.circular(screenHeight! * 0.04),
-              bottomRight: (haveSharpCorner == false)
-                  ? Radius.circular(screenHeight! * 0.04)
-                  : Radius.circular(0),
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(screenHeight * 0.04),
+            bottomLeft: Radius.circular(screenHeight * 0.04),
+            topRight: Radius.circular(screenHeight * 0.04),
+            bottomRight: (haveSharpCorner == false)
+                ? Radius.circular(screenHeight * 0.04)
+                : Radius.circular(0),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: focusedBorderColor, width: screenHeight! * 0.002),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(screenHeight! * 0.04),
-              bottomLeft: Radius.circular(screenHeight! * 0.04),
-              topRight: Radius.circular(screenHeight! * 0.04),
-              bottomRight: (haveSharpCorner == false)
-                  ? Radius.circular(screenHeight! * 0.04)
-                  : Radius.circular(0),
-            ),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(color: hintTextColor),
+          boxShadow: shadow,
         ),
-        style: TextStyle(
-            color: textColor, fontWeight: FontWeight.bold, fontSize: fontSize),
+        child: TextField(
+          inputFormatters: [
+            // allow only numbers
+            if (keyboardType == TextInputType.phone) FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+            // truncating the text to 10 characters
+            if (keyboardType == TextInputType.phone) LengthLimitingTextInputFormatter(10),
+          ],
+          onTapOutside: (focusNode) {
+            if(hideKeyboardOnTapOutside == true) {
+              FocusScope.of(context).unfocus();
+            }
+          },
+          focusNode: focusNode,
+          controller: controller,
+          obscureText: obscureText!,
+          keyboardType: keyboardType,
+          textInputAction: textInputAction,
+          maxLines: maxLines,
+          minLines: minLines,
+          onChanged: onChanged,
+          cursorColor: cursorColor,
+          cursorWidth: screenWidth * 0.009,
+          cursorHeight: screenWidth * 0.056,
+          decoration: InputDecoration(
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            labelText: label,
+            labelStyle: TextStyle(color: kBlack, fontWeight: FontWeight.bold),
+            contentPadding: (contentPadding != null) ? contentPadding : EdgeInsets.all(screenHeight * 0.02),
+            filled: true,
+            counterStyle: TextStyle(color: Colors.transparent),
+            fillColor: fillColor,
+            focusColor: focusColor,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: enabledBorderColor, width: (enabledBorderWidth == null) ? screenHeight * 0.0015 : enabledBorderWidth!),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(screenHeight * 0.04),
+                bottomLeft: Radius.circular(screenHeight * 0.04),
+                topRight: Radius.circular(screenHeight * 0.04),
+                bottomRight: (haveSharpCorner == false)
+                    ? Radius.circular(screenHeight * 0.04)
+                    : Radius.circular(0),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: focusedBorderColor, width: (focusedBorderWidth == null) ? screenHeight * 0.0015 : enabledBorderWidth!),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(screenHeight * 0.04),
+                bottomLeft: Radius.circular(screenHeight * 0.04),
+                topRight: Radius.circular(screenHeight * 0.04),
+                bottomRight: (haveSharpCorner == false)
+                    ? Radius.circular(screenHeight * 0.04)
+                    : Radius.circular(0),
+              ),
+            ),
+            hintText: hintText,
+            hintStyle: TextStyle(color: hintTextColor),
+          ),
+          style: TextStyle(
+              color: textColor, fontSize: fontSize, fontWeight: FontWeight.w600),
 
+        ),
       ),
     );
   }

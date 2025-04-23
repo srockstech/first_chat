@@ -11,8 +11,6 @@ import FirebaseCore
   ) -> Bool {
     let providerFactory = AppCheckDebugProviderFactory()
     AppCheck.setAppCheckProviderFactory(providerFactory)
-      print(providerFactory)
-      print(AppCheck.setAppCheckProviderFactory(providerFactory))
     FirebaseApp.configure()
     GeneratedPluginRegistrant.register(with: self)
       return super.application(application, didFinishLaunchingWithOptions: launchOptions)

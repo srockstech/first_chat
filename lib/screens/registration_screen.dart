@@ -3,8 +3,9 @@ import 'package:first_chat/components/circular_icon_button.dart';
 import 'package:first_chat/components/quote_bubble_text_field.dart';
 import 'package:first_chat/components/rounded_button.dart';
 import 'package:first_chat/constants.dart';
-import 'package:first_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/styles/custom_box_decoration.dart';
 import 'package:first_chat/screens/chat_screen.dart';
+import 'package:first_chat/styles/custom_shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +13,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../services/firebase_facebook_auth.dart';
 import '../services/firebase_google_auth.dart';
+import '../styles/custom_text_style.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'RegistrationScreen';
@@ -31,6 +33,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     TextInputType.multiline
   ];
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // late PageController _pageController;
+  // double _dragStartX = 0.0;
+  //
+  // @override
+  // void initState() {
+  //   _pageController = PageController();
+  //   super.initState();
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   _pageController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +88,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: screenHeight * 0.05,
                   ),
                   QuoteBubbleTextField(
-                    screenHeight: screenHeight,
                     keyboardType: TextInputType.name,
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(left: screenHeight * 0.012),
@@ -89,7 +105,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: screenHeight * 0.019,
                   ),
                   QuoteBubbleTextField(
-                    screenHeight: screenHeight,
                     keyboardType: TextInputType.emailAddress,
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(left: screenHeight * 0.012),
@@ -107,7 +122,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: screenHeight * 0.019,
                   ),
                   QuoteBubbleTextField(
-                    screenHeight: screenHeight,
                     obscureText: hiddenPassword,
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(left: screenHeight * 0.012),
@@ -152,22 +166,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   RoundedButton(
                     topLeftSharpCorner: true,
                     color: kLightBrown,
-                    shadowColor: kLightBrownShadow,
-                    text: 'Register',
-                    textColor: Colors.white,
+                    shadow: CustomShadow.primaryCTAShadow(),
+                    child: Text(
+                      'Register',
+                      style: CustomTextStyle.secondaryTextStyle(context, screenHeight),
+                    ),
                     onPressed: () async {
                       setState(() {
                         showSpinner = true;
                       });
                       try {
-                        final newUser =
-                            await _auth.createUserWithEmailAndPassword(
+                        await _auth.createUserWithEmailAndPassword(
                           email: email!,
                           password: password!,
                         );
-                        if (newUser != null) {
                           Navigator.pushNamed(context, ChatScreen.id);
-                        }
                         setState(() {
                           showSpinner = false;
                         });
@@ -197,7 +210,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         Text('   OR   ',
                             style: TextStyle(
                               color: kBlack,
-                              fontSize: screenHeight * 0.018,
+                              fontSize: screenHeight * 0.02,
                               fontWeight: FontWeight.w600,
                             )),
                         Container(
@@ -278,3 +291,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
+
+// onHorizontalDragStart: (details) {
+//   _dragStartX = details.localPosition.dx;
+// },
+// onHorizontalDragUpdate: (details) {
+//   double dragDistance = details.localPosition.dx - _dragStartX;
+//   _pageController.jumpTo(-dragDistance);
+//   print(dragDistance);
+// },
+// onHorizontalDragEnd: (details) {
+//   double dragDistance = details.localPosition.dx - _dragStartX;
+//   if (dragDistance > 100) {
+//     Navigator.pushReplacementNamed(context, WelcomeScreen.id);
+//     print(_pageController.page);
+//   } else {
+//     print(_pageController.page);
+//     _pageController.animateTo(0.0, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+//   }
+// },

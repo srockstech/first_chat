@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class CustomBoxDecoration {
@@ -23,7 +25,12 @@ class CustomBoxDecoration {
         topRight: Radius.circular(screenHeight * 0.068,),
       ),
       boxShadow: [
-        BoxShadow(
+        (Platform.isAndroid) ? BoxShadow(
+          color: Colors.black45,
+          offset: Offset(-25, -5),
+          spreadRadius: 3,
+          blurRadius: 7,
+        ) : BoxShadow(
           color: Colors.black45,
           offset: Offset(-25, 3),
           spreadRadius: 10,

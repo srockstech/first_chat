@@ -43,8 +43,8 @@ class FirebaseGoogleAuth {
   }
 
   Future signOut() async {
-    await googleSignIn.signOut();
-    await googleSignIn.disconnect();
+    // await googleSignIn.signOut();
+    // await googleSignIn.disconnect();
     await _auth.signOut();
   }
 }

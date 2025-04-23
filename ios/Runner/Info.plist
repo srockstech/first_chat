@@ -48,15 +48,24 @@
 	<key>CLIENT_ID</key>
 	<string>525030120892-9ftqilhb91e6n2q7tinjajstdstogjap.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
-    <array>
-    	<dict>
-    		<key>CFBundleTypeRole</key>
-    		<string>Editor</string>
-    		<key>CFBundleURLSchemes</key>
-    		<array>
-    			<string>com.googleusercontent.apps.525030120892-9ftqilhb91e6n2q7tinjajstdstogjap</string>
-    		</array>
-    	</dict>
-    </array>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.525030120892-9ftqilhb91e6n2q7tinjajstdstogjap</string>
+				<string>fb1253745638665610</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookClientToken</key>
+	<string>4eea5c81c5424f88b19ea3337b9462e3</string>
+	<key>FacebookAppID</key>
+	<string>1253745638665610</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<true/>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
 </dict>
 </plist>

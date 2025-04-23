@@ -4,13 +4,15 @@ import 'package:first_chat/components/circular_icon_button.dart';
 import 'package:first_chat/components/quote_bubble_text_field.dart';
 import 'package:first_chat/components/rounded_button.dart';
 import 'package:first_chat/constants.dart';
-import 'package:first_chat/design/custom_box_decoration.dart';
+import 'package:first_chat/styles/custom_box_decoration.dart';
 import 'package:first_chat/screens/welcome_screen.dart';
 import 'package:first_chat/services/firebase_facebook_auth.dart';
 import 'package:first_chat/services/firebase_google_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../styles/custom_text_style.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User? loggedInUser;
@@ -62,10 +64,10 @@ class _ChatScreenState extends State<ChatScreen> {
       () => setMessageSerialToLast(),
     );
     final screenHeight = MediaQuery.of(context).size.height;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (value) async {
         await SystemNavigator.pop();
-        return false;
       },
       child: Scaffold(
         backgroundColor: kDarkBrown,
@@ -83,19 +85,25 @@ class _ChatScreenState extends State<ChatScreen> {
                     children: [
                       RoundedButton(
                         color: Colors.transparent,
-                        text: 'Logout',
-                        textColor: kCream,
+                        child: Text(
+                          'Logout',
+                          style: CustomTextStyle.secondaryTextStyle(context, screenHeight).copyWith(color: kCream),
+                        ),
                         onPressed: () async {
                           try {
+                            print('Logged in user: ${loggedInUser!.email}');
                             var signInMethod =
                             await _auth.fetchSignInMethodsForEmail(
                                 loggedInUser!.email!);
+                            print('SignIn method: ${signInMethod[0]}');
                             switch (signInMethod[0]) {
                               case 'facebook.com':
-                                FirebaseFacebookAuth().signOut();
+                                await FirebaseFacebookAuth().signOut();
+                                print('facebook.com');
                                 break;
                               case 'google.com':
-                                FirebaseGoogleAuth().signOut();
+                                await FirebaseGoogleAuth().signOut();
+                                print('google.com');
                                 break;
                               default:
                                 await _auth.signOut();
@@ -103,13 +111,17 @@ class _ChatScreenState extends State<ChatScreen> {
                           } catch (e) {
                             print('Exception in fetchSignInMethods: $e');
                           }
-                          Navigator.pushNamed(context, WelcomeScreen.id);
+                          if(_auth.currentUser == null) {
+                            Navigator.pushNamed(context, WelcomeScreen.id);
+                          }
                         },
                       ),
                       RoundedButton(
                         color: Colors.transparent,
-                        text: 'Search',
-                        textColor: kCream,
+                        child: Text(
+                          'Search',
+                          style: CustomTextStyle.secondaryTextStyle(context, screenHeight).copyWith(color: kCream),
+                        ),
                         onPressed: () {},
                       ),
                     ],
@@ -162,7 +174,6 @@ class _ChatScreenState extends State<ChatScreen> {
                               splashRadius: screenHeight * 0.03,
                               onPressed: () {},
                             ),
-                            screenHeight: screenHeight,
                             hintText: 'Type your message...',
                             hintTextColor: Colors.grey[600],
                             onChanged: (value) {

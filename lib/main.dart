@@ -1,8 +1,10 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:first_chat/routes/custom_page_route.dart';
 import 'package:first_chat/screens/chat_screen.dart';
 import 'package:first_chat/screens/login_screen.dart';
+import 'package:first_chat/screens/phone_login_screen.dart';
 import 'package:first_chat/screens/registration_screen.dart';
 import 'package:first_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +43,7 @@ class _FlashChatState extends State<FlashChat> {
     ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       theme: ThemeData.light().copyWith(
         primaryColor: kPink,
         textButtonTheme: TextButtonThemeData(
@@ -63,19 +66,51 @@ class _FlashChatState extends State<FlashChat> {
         ),
         textTheme: GoogleFonts.robotoTextTheme(
           Theme.of(context).textTheme.copyWith(
-            titleLarge: TextStyle(
-              fontWeight: FontWeight.w900,
-            ),
+                titleLarge: TextStyle(
+                  fontWeight: FontWeight.w900,
+                ),
               ),
         ),
       ),
       initialRoute:
           (_auth.currentUser != null) ? ChatScreen.id : WelcomeScreen.id,
-      routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        RegistrationScreen.id: (context) => RegistrationScreen(),
-        ChatScreen.id: (context) => ChatScreen(),
+      // routes: {
+      //   WelcomeScreen.id: (context) => WelcomeScreen(),
+      //   LoginScreen.id: (context) => LoginScreen(),
+      //   RegistrationScreen.id: (context) => RegistrationScreen(),
+      //   ChatScreen.id: (context) => ChatScreen(),
+      // },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case WelcomeScreen.id:
+            return MaterialPageRoute(builder: (context) => WelcomeScreen(passedForAnimation: false,));
+          case LoginScreen.id:
+            return CustomPageRoute(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    LoginScreen(),
+                currentPageBuilder: (context, animation, secondaryAnimation) => WelcomeScreen(passedForAnimation: true,),
+            );
+          case RegistrationScreen.id:
+            return CustomPageRoute(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  LoginScreen(),
+              currentPageBuilder: (context, animation, secondaryAnimation) => WelcomeScreen(passedForAnimation: true,),
+            );
+            case PhoneLoginScreen.id:
+            return CustomPageRoute(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  PhoneLoginScreen(),
+              currentPageBuilder: (context, animation, secondaryAnimation) => WelcomeScreen(passedForAnimation: true,),
+            );
+          case ChatScreen.id:
+            return MaterialPageRoute(
+              builder: (context) => ChatScreen(),
+            );
+          default:
+            return MaterialPageRoute(
+              builder: (context) => WelcomeScreen(passedForAnimation: false,),
+            );
+        }
       },
     );
   }
