@@ -12,7 +12,7 @@ class CustomBoxDecoration {
         ),
       ],
       borderRadius: BorderRadius.only(
-        bottomLeft: Radius.elliptical(screenHeight * 0.1, screenHeight * 0.07),
+        bottomLeft: Radius.circular(screenHeight * 0.068),
       ),
     );
   }
@@ -20,7 +20,7 @@ class CustomBoxDecoration {
   static BoxDecoration topRightRoundCornerShadow(double screenHeight) {
     return BoxDecoration(
       borderRadius: BorderRadius.only(
-        topRight: Radius.elliptical(screenHeight * 0.07, screenHeight * 0.065),
+        topRight: Radius.circular(screenHeight * 0.068,),
       ),
       boxShadow: [
         BoxShadow(
